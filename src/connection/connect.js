@@ -5,8 +5,34 @@ import { logger } from '../utils/logger.js'
 import { config } from '../config.js'
 import { errorLogDetails } from '../utils/errors.js'
 
+export function makeSafeAuthState(state, log = logger) {
+  const original = state.keys
+  return {
+    ...state,
+    keys: {
+      ...original,
+      async get(type, ids) {
+        if (type === 'device-list') {
+          log.debug?.({ requested: ids?.length || 0 }, 'Bypassing persisted Baileys device-list migration state')
+          return {}
+        }
+        return original.get(type, ids)
+      },
+      async set(data) {
+        const safe = { ...data }
+        if (Object.prototype.hasOwnProperty.call(safe, 'device-list')) {
+          log.debug?.({ entries: Object.keys(safe['device-list'] || {}).length }, 'Ignoring Baileys device-list persistence; preserving Signal auth keys')
+          delete safe['device-list']
+        }
+        if (Object.keys(safe).length) await original.set(safe)
+      }
+    }
+  }
+}
+
 export async function startConnection({ onSocket, onClosed }) {
-  const { state, saveCreds } = await useMultiFileAuthState(config.authDir)
+  const { state: rawState, saveCreds } = await useMultiFileAuthState(config.authDir)
+  const state = makeSafeAuthState(rawState, logger)
   const sock = makeWASocket({ auth: state, browser: Browsers.ubuntu(config.botName), logger, markOnlineOnConnect: false, syncFullHistory: false, generateHighQualityLinkPreview: false })
   sock.ev.on('creds.update', saveCreds)
   sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {

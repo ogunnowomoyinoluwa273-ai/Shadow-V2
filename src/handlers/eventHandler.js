@@ -7,7 +7,7 @@ import { logger } from '../utils/logger.js'
 import { errorLogDetails } from '../utils/errors.js'
 import { createMessageCache, recoverDeletedMessage } from '../services/antiDelete.js'
 
-export function attachHandlers({ sock, commands, settings, config, seen, aiBrain = null, reactions = null, modelRouter = null, metrics = {} }) {
+export function attachHandlers({ sock, commands, settings, config, seen, aiBrain = null, reactions = null, metrics = {} }) {
   const messageCache = createMessageCache()
   const onAutoDelete = async message => { try {
     const jid = message.key.remoteJid; if (!isGroupJid(jid)) return
@@ -15,7 +15,7 @@ export function attachHandlers({ sock, commands, settings, config, seen, aiBrain
     if (isAdmin(metadata, sender) || sameJid(sender, sock.user?.id)) return
     await sock.sendMessage(jid, { delete: message.key }); await sock.sendMessage(jid, { text: 'A prohibited link was removed.' })
   } catch (error) { logger.warn({ err: errorLogDetails(error) }, 'Could not remove prohibited link') } }
-  const handleMessages = createMessageHandler({ sock, commands, settings, config, seen, onAutoDelete, aiBrain, reactions, modelRouter, metrics })
+  const handleMessages = createMessageHandler({ sock, commands, settings, config, seen, onAutoDelete, aiBrain, reactions, metrics })
   sock.ev.on('messages.upsert', async event => {
     for (const message of event.messages || []) messageCache.remember(message)
     await handleMessages(event)

@@ -4,7 +4,7 @@ This inventory is based on `src/commands/registry.js`, the source used to render
 
 ## Commands shown by `.menu`
 
-The current menu command registry contains these 84 commands:
+The current menu command registry contains these 83 commands:
 
 ```text
 addsudo admins alive anibattle anime animegenre animepopular animequiz
@@ -13,7 +13,7 @@ character clear cry define delete delsudo demote disablecmd enablecmd fb
 greet group groupinfo help hidetag hmph hug info insta invite joinrequest
 kick kiss manga media menu mute neko owner pat ping play promote qr quote
 recommend reload resetwarnings revokeinvite rules runtime seasonal
-setcharacter setdescription setgoodbye setname setrules setwelcome shortlink
+setdescription setgoodbye setname setrules setwelcome shortlink
 slap slowmode stats sticker sudos support tagall tiktok toimage tomp3
 translate twitter unmute waifu warn warnings weather yta ytv
 ```
@@ -48,7 +48,7 @@ Tool selection is prompt-specific. Ordinary chat and greetings omit the `tools` 
 The following remain available through their normal prefix commands but are not AI tools because they involve owner/admin authorization, destructive actions, media context, downloads, external side effects, or stateful workflows that need additional safeguards:
 
 - Owner and account administration: `.addsudo`, `.delsudo`, `.sudos`, `.stats`, `.reload`, `.broadcast`, `.owner`.
-- Group administration and moderation: `.admins`, `.groupinfo`, `.greet`, `.rules`, `.warnings`, `.kick`, `.promote`, `.demote`, `.tagall`, `.hidetag`, `.antilink`, `.antidelete`, `.mute`, `.unmute`, `.slowmode`, `.delete`, `.clear`, `.disablecmd`, `.enablecmd`, `.setname`, `.setdescription`, `.invite`, `.revokeinvite`, `.joinrequest`, `.group`, `.setwelcome`, `.setcharacter`, `.setgoodbye`, `.setrules`, `.warn`, `.resetwarnings`.
+- Group administration and moderation: `.admins`, `.groupinfo`, `.greet`, `.rules`, `.warnings`, `.kick`, `.promote`, `.demote`, `.tagall`, `.hidetag`, `.antilink`, `.antidelete`, `.mute`, `.unmute`, `.slowmode`, `.delete`, `.clear`, `.disablecmd`, `.enablecmd`, `.setname`, `.setdescription`, `.invite`, `.revokeinvite`, `.joinrequest`, `.group`, `.setwelcome`, `.setgoodbye`, `.setrules`, `.warn`, `.resetwarnings`.
 - Media conversion and message-context operations: `.sticker`, `.toimage`, `.tomp3`, `.media`, `.qr`.
 - Downloads and external media workflows: `.animesong`, `.yta`, `.ytv`, `.play`, `.tiktok`, `.insta`, `.fb`, `.twitter`.
 - Stateful or presentation-only commands: `.animequiz`, `.anibattle`, `.seasonal`, `.waifu`, `.neko`, `.translate`, `.shortlink`, `.ping`, `.alive`, `.runtime`, `.info`, `.menu`, `.help`, `.quote`, `.support`.

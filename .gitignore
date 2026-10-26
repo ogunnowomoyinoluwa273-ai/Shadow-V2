@@ -1,27 +1,28 @@
-node_modules/
+# Environment variables and API keys
 .env
 .env.*
 !.env.example
+
+# WhatsApp authentication and session data
+auth_info/
+session/
+sessions/
+auth/
 data/auth/
-data/*.json
-*.log
-.DS_Store
+data/session/
+data/sessions/
 
 # Dependencies
 node_modules/
 
-# Secrets
-.env
-.env.*
-!.env.example
-
-# WhatsApp authentication and sessions
-auth_info_baileys/
-baileys_auth_info/
-session/
-sessions/
-creds.json
-*session*.json
-
-# Private data and logs
+# Logs
 *.log
+npm-debug.log*
+
+# Local secrets and credentials
+credentials.json
+token.json
+
+# Operating system files
+.DS_Store
+Thumbs.db

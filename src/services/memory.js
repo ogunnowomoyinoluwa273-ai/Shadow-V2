@@ -3,7 +3,9 @@ import crypto from 'node:crypto'
 const MAX_MEMORIES_PER_USER = 100
 const MAX_MEMORY_CHARS = 500
 const normalize = value => String(value || '').replace(/\s+/g, ' ').trim()
-const keyFor = value => normalize(value).toLowerCase()
+const keyFor = value => normalize(value).toLowerCase().replace(/:\d+(?=@)/, '')
+const stopWords = new Set(['a', 'about', 'am', 'and', 'are', 'btw', 'can', 'do', 'does', 'for', 'how', 'i', 'is', 'me', 'my', 'of', 'please', 'the', 'that', 'what', 'whats', 'with', 'you', 'your'])
+const searchable = value => String(value || '').toLowerCase().replace(/\bwhat['’]s\b/g, 'what').replace(/\bfav(?:ou?rite)?\b/g, 'favorite').replace(/\bcolour\b/g, 'color').replace(/[^\p{L}\p{N}@]+/gu, ' ')
 const idFor = () => crypto.randomUUID()
 
 export function createMemoryService(store, { maxPerUser = MAX_MEMORIES_PER_USER, maxChars = MAX_MEMORY_CHARS } = {}) {
@@ -27,10 +29,10 @@ export function createMemoryService(store, { maxPerUser = MAX_MEMORIES_PER_USER,
     return record
   }
   const recall = (user, query = '') => {
-    const terms = normalize(query).toLowerCase().split(/\s+/).filter(Boolean)
+    const terms = searchable(normalize(query)).split(/\s+/).filter(term => term && !stopWords.has(term))
     const entries = list(user)
     if (!terms.length) return entries.slice(-10)
-    return entries.filter(item => terms.every(term => item.text.toLowerCase().includes(term))).slice(-10)
+    return entries.filter(item => terms.every(term => searchable(item.text).includes(term))).slice(-10)
   }
   const forget = async (user, idOrText) => {
     const owner = keyFor(user); const needle = normalize(idOrText).toLowerCase(); let removed = false

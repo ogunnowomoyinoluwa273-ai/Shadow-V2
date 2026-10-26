@@ -1,0 +1,52 @@
+{
+  "120363412517016155@g.us": {
+    "antiLink": false,
+    "antiLinkAllUrls": false,
+    "antiDelete": false,
+    "welcome": true,
+    "goodbye": false,
+    "rules": "Be respectful. Follow the group topic and WhatsApp rules.",
+    "support": "",
+    "mutedParticipants": [],
+    "slowmodeSeconds": 0,
+    "disabledCommands": [],
+    "character": "Gojo"
+  },
+  "120363428923236924@g.us": {
+    "antiLink": false,
+    "antiLinkAllUrls": false,
+    "antiDelete": false,
+    "welcome": false,
+    "goodbye": false,
+    "rules": "Be respectful. Follow the group topic and WhatsApp rules.",
+    "support": "",
+    "mutedParticipants": [],
+    "slowmodeSeconds": 0,
+    "disabledCommands": []
+  },
+  "120363420315946213@g.us": {
+    "antiLink": false,
+    "antiLinkAllUrls": false,
+    "antiDelete": false,
+    "welcome": false,
+    "goodbye": false,
+    "rules": "Be respectful. Follow the group topic and WhatsApp rules.",
+    "support": "",
+    "mutedParticipants": [],
+    "slowmodeSeconds": 0,
+    "disabledCommands": []
+  },
+  "120363423555735096@g.us": {
+    "antiLink": false,
+    "antiLinkAllUrls": false,
+    "antiDelete": false,
+    "welcome": false,
+    "goodbye": false,
+    "rules": "Be respectful. Follow the group topic and WhatsApp rules.",
+    "support": "",
+    "mutedParticipants": [],
+    "slowmodeSeconds": 0,
+    "disabledCommands": [],
+    "character": "sarcastic"
+  }
+}

@@ -2,7 +2,7 @@ import { bareNumber, isGroupJid, normalizeJid, participantId, participantIds, sa
 import { getMentions } from './message.js'
 import { UserFacingError } from './errors.js'
 
-export function ownerJids(config) { return config.ownerNumber ? [`${bareNumber(config.ownerNumber)}@s.whatsapp.net`] : [] }
+export function ownerJids(config) { return [config.ownerNumber ? `${bareNumber(config.ownerNumber)}@s.whatsapp.net` : '', config.ownerLid].filter(Boolean) }
 export function isOwner(sender, config) { return ownerJids(config).some(jid => sameJid(sender, jid)) }
 export function messageSender(message, sock) {
   if (message?.key?.fromMe) return sock?.user?.id || sock?.user?.phoneNumber || message.key.participant || message.key.remoteJid || ''

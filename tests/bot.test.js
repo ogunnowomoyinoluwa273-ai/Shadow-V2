@@ -3,11 +3,11 @@ import assert from 'node:assert/strict'
 import fs from 'node:fs/promises'
 import os from 'node:os'
 import path from 'node:path'
-import { extractText, getMentions, getQuoted, parseCommand } from '../src/utils/message.js'
+import { extractText, getMentions, getQuoted, getQuotedMessageInfo, parseCommand } from '../src/utils/message.js'
 import { detectProhibitedLink } from '../src/services/antiLink.js'
 import { renderTemplate } from '../src/services/welcome.js'
 import { isAdmin, isOwner, authenticatedAccountIsOwner, botIsAdmin } from '../src/utils/permissions.js'
-import { createMessageHandler } from '../src/handlers/messageHandler.js'
+import { classifyQuotedSender, createMessageHandler } from '../src/handlers/messageHandler.js'
 import { attachHandlers } from '../src/handlers/eventHandler.js'
 import { buildCommands, renderHelp, renderMenu } from '../src/commands/registry.js'
 import { calculate } from '../src/services/calculator.js'
@@ -21,6 +21,7 @@ import { createTsundereService, TSUNDERE_LINES } from '../src/services/tsundere.
 import { measuredPingLatencyMs } from '../src/services/ping.js'
 import { errorLogDetails, GENERIC_FAILURE_MESSAGE, UserFacingError } from '../src/utils/errors.js'
 import { createFatalProcessErrorHandler } from '../src/utils/processSafety.js'
+import { createToolRegistry } from '../src/services/aiBrain.js'
 
 function webpChunk(name, payload) {
   const padding = payload.length & 1
@@ -83,6 +84,23 @@ test('extracts quoted context and mentions from image-caption messages', () => {
   assert.deepEqual(getMentions(message), ['target@s.whatsapp.net'])
   assert.equal(getQuoted(message).message.conversation, 'Bonjour')
 })
+test('extracts quoted sender, text, and media metadata without confusing the requester', () => {
+  const message = { key: { remoteJid: '123-456@g.us' }, message: { extendedTextMessage: { text: 'Shadow, what do you think?', contextInfo: { stanzaId: 'quoted-2', participant: 'other@s.whatsapp.net', quotedMessage: { imageMessage: { caption: 'Shadow is stupid', mimetype: 'image/jpeg' } } } } } }
+  const info = getQuotedMessageInfo(message)
+  assert.equal(info.sender, 'other@s.whatsapp.net')
+  assert.equal(info.text, 'Shadow is stupid')
+  assert.equal(info.type, 'imageMessage')
+  assert.equal(info.mimetype, 'image/jpeg')
+  assert.equal(info.hasCaption, true)
+})
+test('classifies quoted participant, verified owner, and Shadow identities separately', () => {
+  const config = { ownerNumber: '+2349166712534', ownerLid: 'owner-lid@lid' }
+  const sock = { user: { id: 'shadow-lid@lid', phoneNumber: '2349166712534@s.whatsapp.net' } }
+  assert.equal(classifyQuotedSender({ sender: 'friend@s.whatsapp.net' }, sock, config), 'participant')
+  assert.equal(classifyQuotedSender({ sender: '2349166712534@s.whatsapp.net' }, { user: { id: 'bot-lid@lid', phoneNumber: '999@s.whatsapp.net' } }, config), 'owner')
+  assert.equal(classifyQuotedSender({ sender: 'shadow-lid@lid' }, sock, config), 'shadow')
+  assert.equal(classifyQuotedSender({ sender: '' }, sock, config), 'unknown')
+})
 test('extracts document captions and detects wrapped media types', () => {
   const document = { message: { ephemeralMessage: { message: { documentMessage: { caption: 'translated document' } } } } }
   assert.equal(extractText(document), 'translated document')
@@ -109,6 +127,54 @@ test('processes owner self-commands and participant commands, but ignores ordina
   const otherSock = { user: { id: '11111@s.whatsapp.net', phoneNumber: '11111@s.whatsapp.net' }, sendMessage: async () => {} }
   await createMessageHandler({ ...base, sock: otherSock })({ messages: [makeMessage('self-2', { fromMe: true }, 'ordinary outgoing text')], type: 'notify' })
   assert.deepEqual(processed, ['owner-self', '99999@s.whatsapp.net'])
+})
+test('message handler passes replies to Gemini with distinct quoted sender roles', async () => {
+  const calls = []
+  const handler = createMessageHandler({
+    sock: { user: { id: 'shadow-lid@lid', phoneNumber: '2349166712534@s.whatsapp.net' }, sendMessage: async () => {} },
+    commands: { lookup: () => undefined, sudo: { has: jid => jid === 'requester@s.whatsapp.net' } },
+    settings: { get: () => ({}) },
+    config: { prefix: '.', ownerNumber: '+2349166712534' },
+    seen: new Set(), onAutoDelete: async () => {},
+    aiBrain: { parseShadowAddress: value => value.match(/^Shadow[,:]?\s*(.*)$/i)?.[1] ?? null, run: async value => { calls.push(value); return true } }
+  })
+  const makeReply = (id, participant, quotedParticipant, quotedText) => ({ key: { id, remoteJid: '123-456@g.us', participant }, message: { extendedTextMessage: { text: 'Shadow, what do you think?', contextInfo: { stanzaId: `${id}-quoted`, participant: quotedParticipant, quotedMessage: { conversation: quotedText } } } } })
+  await handler({ type: 'notify', messages: [makeReply('reply-other', 'requester@s.whatsapp.net', 'friend@s.whatsapp.net', 'Shadow is stupid'), makeReply('reply-shadow', 'requester@s.whatsapp.net', 'shadow-lid@lid', 'I said the answer was 42.')] })
+  assert.equal(calls.length, 2)
+  assert.equal(calls[0].quoted.role, 'participant')
+  assert.equal(calls[0].quoted.sender, 'friend@s.whatsapp.net')
+  assert.equal(calls[1].quoted.role, 'shadow')
+  assert.equal(calls[1].quoted.text, 'I said the answer was 42.')
+})
+test('message handler records ordinary group turns and supplies them to the next addressed follow-up', async () => {
+  const transcript = []
+  const calls = []
+  const handler = createMessageHandler({
+    sock: { user: { id: 'shadow-lid@lid' }, sendMessage: async () => {} },
+    commands: { lookup: () => undefined, sudo: { has: jid => jid === 'gafar@s.whatsapp.net' } },
+    settings: { get: () => ({}) },
+    config: { prefix: '.', ownerNumber: '+2349166712534' },
+    seen: new Set(), onAutoDelete: async () => {},
+    aiBrain: {
+      parseShadowAddress: value => value.match(/^Shadow[,:]?\s*(.*)$/i)?.[1] ?? null,
+      recordGroupMessage: async value => { const prior = transcript.slice(); transcript.push(value); return prior },
+      run: async value => { calls.push(value); return true }
+    }
+  })
+  const groupMessage = (id, participant, pushName, text, contextInfo = undefined) => ({
+    key: { id, remoteJid: '123-456@g.us', participant },
+    pushName,
+    message: { extendedTextMessage: { text, ...(contextInfo ? { contextInfo } : {}) } }
+  })
+  await handler({ type: 'notify', messages: [
+    groupMessage('temi-1', 'temi@s.whatsapp.net', 'Temi', 'Welcome, Gafar. Good to have you here.'),
+    groupMessage('gafar-1', 'gafar@s.whatsapp.net', 'Gafar', "Shadow, what's up with him?", { stanzaId: 'quoted-miyamaru', participant: 'miyamaru@s.whatsapp.net', quotedMessage: { conversation: 'I keep arguing with my reflection.' } })
+  ] })
+  assert.equal(transcript.length, 2)
+  assert.deepEqual(calls[0].recentMessages.map(item => [item.speaker, item.sender, item.text]), [['Temi', 'temi@s.whatsapp.net', 'Welcome, Gafar. Good to have you here.']])
+  assert.equal(calls[0].speaker, 'Gafar')
+  assert.equal(calls[0].quoted.sender, 'miyamaru@s.whatsapp.net')
+  assert.equal(calls[0].quoted.text, 'I keep arguing with my reflection.')
 })
 test('sudo service persists and revokes normalized participant identities', async () => {
   const { createSudoService } = await import('../src/services/sudo.js')
@@ -177,7 +243,50 @@ test('registers all requested anime commands', () => {
   const registry = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {} }, startedAt: Date.now() })
   for (const name of ['anime', 'character', 'seasonal', 'animesong', 'waifu', 'anibattle', 'animequiz', 'recommend']) assert.ok(registry.lookup(name), `${name} should be registered`)
 })
-test('parses AnimeThemes video results into opening and ending records', async () => {
+test('natural-language registry exposes every real command through one verified command tool', async () => {
+  const commands = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {}, has: () => false }, startedAt: Date.now() })
+  const registry = createToolRegistry({ commands, sock: { user: { id: 'owner@s.whatsapp.net' }, sendMessage: async () => {} }, message: { key: { remoteJid: 'chat@s.whatsapp.net' } }, owner: true, sender: 'owner@s.whatsapp.net', sudo: commands.sudo })
+  const tool = registry.byName.get('run_existing_command')
+  assert.ok(tool)
+  for (const command of commands.allCommands) assert.ok(tool.parameters.properties.command.enum.includes(command.name), `${command.name} is missing from natural-language access`)
+  const result = await tool.execute({ command: 'ping', args: [] })
+  assert.equal(result.result.command, 'ping')
+})
+test('natural-language command tool cannot bypass owner-only authorization', async () => {
+  const commands = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {}, has: () => false }, startedAt: Date.now() })
+  const tool = createToolRegistry({ commands, sock: { user: { id: 'user@s.whatsapp.net' }, sendMessage: async () => {} }, message: { key: { remoteJid: 'chat@s.whatsapp.net' } }, owner: false, sender: 'user@s.whatsapp.net', sudo: commands.sudo }).byName.get('run_existing_command')
+  await assert.rejects(() => tool.execute({ command: 'reload', args: [] }), /owner|authorized/i)
+})
+test('consequential command confirmation is application-owned and bound to the exact target', async () => {
+  const confirmationStore = new Map()
+  const settings = { get: () => ({}) }
+  const commands = buildCommands({ settings, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {}, has: () => false }, startedAt: Date.now() })
+  const sock = { user: { id: 'owner@s.whatsapp.net' }, groupMetadata: async () => ({ participants: [{ id: 'owner@s.whatsapp.net', admin: 'admin' }] }), groupParticipantsUpdate: async () => {}, sendMessage: async () => {} }
+  const message = { key: { remoteJid: '123@g.us', participant: 'owner@s.whatsapp.net' }, message: { extendedTextMessage: { contextInfo: { mentionedJid: ['target@s.whatsapp.net'] } } } }
+  const tool = createToolRegistry({ commands, sock, message, owner: true, sender: 'owner@s.whatsapp.net', settings, sudo: commands.sudo, confirmationStore, confirmationKey: '123@g.us:owner@s.whatsapp.net' }).byName.get('run_existing_command')
+  const first = await tool.execute({ command: 'promote', args: ['@target'], confirmed: true })
+  assert.equal(first.result.confirmation_required, true)
+  const pending = confirmationStore.get('123@g.us:owner@s.whatsapp.net')
+  assert.equal(pending.command, 'promote')
+  await assert.rejects(() => tool.execute({ command: 'promote', args: ['@other'], confirmation_token: pending.token }), /exact pending action/i)
+  const completed = await tool.execute({ command: 'promote', args: ['@target'], confirmation_token: pending.token })
+  assert.equal(completed.result.completed, true)
+  assert.equal(confirmationStore.has('123@g.us:owner@s.whatsapp.net'), false)
+})
+test('command-backed tool preserves quoted-media context and reports the real handler failure', async () => {
+  const commands = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {}, has: () => false }, startedAt: Date.now() })
+  const tool = createToolRegistry({ commands, sock: { user: { id: 'owner@s.whatsapp.net' }, sendMessage: async () => {} }, message: { key: { remoteJid: 'chat@s.whatsapp.net' }, message: { conversation: 'turn this into a sticker' } }, owner: true, sender: 'owner@s.whatsapp.net', sudo: commands.sudo }).byName.get('run_existing_command')
+  await assert.rejects(() => tool.execute({ command: 'sticker', args: [] }), /Reply to an image or video/i)
+})
+test('command-backed tool enforces group-only and disabled-command policy before handler execution', async () => {
+  const groupSettings = { get: () => ({ disabledCommands: ['ping'] }) }
+  const commands = buildCommands({ settings: groupSettings, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {}, has: () => true }, startedAt: Date.now() })
+  const groupTool = createToolRegistry({ commands, settings: groupSettings, sock: { user: { id: 'sudo@s.whatsapp.net' }, sendMessage: async () => {} }, message: { key: { remoteJid: '123@g.us' } }, owner: false, sender: 'sudo@s.whatsapp.net', sudo: commands.sudo }).byName.get('run_existing_command')
+  await assert.rejects(() => groupTool.execute({ command: 'ping', args: [] }), /disabled/i)
+  const dmTool = createToolRegistry({ commands, settings: { get: () => ({}) }, sock: { user: { id: 'sudo@s.whatsapp.net' }, sendMessage: async () => {} }, message: { key: { remoteJid: 'chat@s.whatsapp.net' } }, owner: false, sender: 'sudo@s.whatsapp.net', sudo: commands.sudo }).byName.get('run_existing_command')
+  await assert.rejects(() => dmTool.execute({ command: 'groupinfo', args: [] }), /group/i)
+})
+test('parses AnimeThemes video results into opening and ending records', async () => { 
   const originalFetch = global.fetch
   global.fetch = async url => {
     assert.match(String(url), /api\.animethemes\.moe\/search/)
@@ -217,9 +326,11 @@ test('.animesong does not expose a search URL when there is no downloadable them
   const registry = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {} }, startedAt: Date.now(), anime: { animeThemes: async () => [{ title: 'Search Naruto', type: 'Opening', url: 'https://animethemes.moe/search?q=Naruto' }] } })
   await assert.rejects(registry.lookup('animesong').run({ sock: {}, message: { key: { remoteJid: 'chat@s.whatsapp.net' } }, args: ['Naruto'] }), /No downloadable opening or ending audio/)
 })
-test('registers the requested manga, reaction, popularity, and greeting commands', () => {
+test('registers the requested manga, reaction, popularity, and greeting commands without the retired character command', () => {
   const registry = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {} }, startedAt: Date.now() })
-  for (const name of ['manga', 'neko', 'animequote', 'animegenre', 'animepopular', 'hug', 'slap', 'kiss', 'pat', 'bonk', 'cry', 'bite', 'setcharacter', 'greet']) assert.ok(registry.lookup(name), `${name} should be registered`)
+  for (const name of ['manga', 'neko', 'animequote', 'animegenre', 'animepopular', 'hug', 'slap', 'kiss', 'pat', 'bonk', 'cry', 'bite', 'greet']) assert.ok(registry.lookup(name), `${name} should be registered`)
+  const removedCommand = ['set', 'character'].join('')
+  assert.equal(registry.lookup(removedCommand), undefined)
 })
 test('reaction service converts the provider GIF into a validated 512x512 animated WebP sticker and cleans temporary files', async () => {
   const tempDirectory = await fs.mkdtemp(path.join(os.tmpdir(), 'shadow-reaction-test-'))
@@ -385,18 +496,15 @@ test('.hmph is registered in generated help and the Anime menu as a sticker reac
   assert.match(help, /\.hmph\s+·\s+Send a playful tsundere line with an animated anime sticker\./)
   assert.ok(menu.includes('.*𝐇𝐌𝐏𝐇*'))
 })
-test('setcharacter persists a group character and greet uses it', async () => {
-  const state = {}
-  const settings = { get: jid => ({ ...(state[jid] || {}) }), set: async (jid, patch) => { state[jid] = { ...(state[jid] || {}), ...patch } } }
-  const registry = buildCommands({ settings, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {} }, startedAt: Date.now() })
+test('.greet remains a group-only prefix command without character state', async () => {
+  const registry = buildCommands({ settings: { get: () => ({}) }, warnings: { get: () => ({}) }, sudo: { list: () => [], add: async () => {}, remove: async () => {} }, startedAt: Date.now() })
   const message = { key: { remoteJid: '123-456@g.us' } }
-  const metadata = { participants: [{ id: 'owner@s.whatsapp.net', admin: 'admin' }] }
-  const sock = { groupMetadata: async () => metadata, user: { id: 'bot@s.whatsapp.net' } }
   const outputs = []
-  await registry.lookup('setcharacter').run({ sock, message: { ...message, key: { ...message.key, participant: 'owner@s.whatsapp.net' } }, args: ['Gojo'], reply: async text => outputs.push(text) })
-  await registry.lookup('greet').run({ message, reply: async text => outputs.push(text) })
-  assert.equal(state['123-456@g.us'].character, 'Gojo')
-  assert.match(outputs[1], /Gojo: Welcome/)
+  await registry.lookup('greet').run({ message, args: [], reply: async text => outputs.push(text) })
+  await registry.lookup('greet').run({ message, args: ['the', 'new', 'members'], reply: async text => outputs.push(text) })
+  assert.match(outputs[0], /Welcome everyone/)
+  assert.match(outputs[1], /Welcome the new members/)
+  assert.equal(registry.lookup('greet').groupOnly, true)
 })
 test('parses anime battle names around VS safely', () => { assert.deepEqual(parseBattleArgs('Gojo VS Sukuna'), ['Gojo', 'Sukuna']); assert.throws(() => parseBattleArgs('Gojo'), /Usage/) })
 test('isolates anime quiz sessions and scores answers', () => {

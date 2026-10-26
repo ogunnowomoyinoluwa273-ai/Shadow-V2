@@ -11,7 +11,7 @@ import { createDownloader } from './services/downloader.js'
 import { createReactionService } from './services/reactions.js'
 import { createGeminiBrain } from './services/aiBrain.js'
 import { createImageGenerationService } from './services/imageGeneration.js'
-import { createModelRouter } from './services/modelRouter.js'
+import { createPersistentContextStore } from './services/conversationHistory.js'
 import { logger } from './utils/logger.js'
 import { errorLogDetails } from './utils/errors.js'
 import { createFatalProcessErrorHandler } from './utils/processSafety.js'
@@ -21,23 +21,31 @@ const settingsStore = await createJsonStore(config.settingsFile)
 const warningStore = await createJsonStore(config.warningsFile)
 const sudoStore = await createJsonStore(config.sudoFile, [])
 const memoryStore = await createJsonStore(config.memoryFile, {})
-const modelStore = await createJsonStore(config.modelFile, { activeModel: 'gemini' })
+const historyStore = await createJsonStore(config.historyFile, {})
 const settings = createGroupSettings(settingsStore, config)
 const sudo = createSudoService(sudoStore)
 const memory = createMemoryService(memoryStore)
 const metrics = { messagesSeen: 0, commandsExecuted: 0, deniedCommands: 0, moderationActions: 0, errors: 0 }
-const modelRouter = createModelRouter({ store: modelStore })
-const reload = async () => { await settingsStore.reload(); await warningStore.reload(); await sudoStore.reload(); await memoryStore.reload(); await modelStore.reload() }
-const startedAt = Date.now(); const downloader = createDownloader({ config }); const reactions = createReactionService(); const imageGenerator = createImageGenerationService({ model: config.imageModel, timeoutMs: config.imageTimeoutMs }); const aiBrain = createGeminiBrain({ config, sudo, memory, imageGenerator, modelRouter }); const commands = buildCommands({ settings, warnings: warningStore, sudo, startedAt, metrics, reload, downloader, reactions, modelRouter }); const seen = new Set()
-let currentSocket; let shuttingDown = false; let reconnecting = false
-
+const persistentContext = createPersistentContextStore(historyStore, { maxTurns: config.historyMaxTurns })
+const reload = async () => { await settingsStore.reload(); await warningStore.reload(); await sudoStore.reload(); await memoryStore.reload(); await historyStore.reload() }
+const startedAt = Date.now(); const downloader = createDownloader({ config }); const reactions = createReactionService(); const imageGenerator = createImageGenerationService({ model: config.imageModel, timeoutMs: config.imageTimeoutMs }); const commands = buildCommands({ settings, warnings: warningStore, sudo, startedAt, metrics, reload, downloader, reactions }); const aiBrain = createGeminiBrain({ config, sudo, memory, imageGenerator, historyStore: persistentContext, commands, settings }); const seen = new Set()
+let currentSocket; let shuttingDown = false; let reconnecting = false; let connectionGeneration = 0; let reconnectTimer
 async function connect() {
+  const generation = ++connectionGeneration
   currentSocket = await startConnection({
-    onSocket: sock => { attachHandlers({ sock, commands, settings, config, seen, aiBrain, reactions, modelRouter, metrics }); reconnecting = false },
-    onClosed: async ({ permanent }) => { if (shuttingDown || permanent || reconnecting) return; reconnecting = true; setTimeout(() => { if (shuttingDown) return; connect().catch(error => { logger.error({ err: errorLogDetails(error) }, 'Reconnect attempt failed'); reconnecting = false }) }, 3000) }
+    onSocket: sock => {
+      if (shuttingDown || generation !== connectionGeneration) { logger.warn({ generation, currentGeneration: connectionGeneration }, 'Ignoring superseded WhatsApp socket'); try { sock.end?.(new Error('superseded socket')) } catch {}; return }
+      attachHandlers({ sock, commands, settings, config, seen, aiBrain, reactions, metrics }); reconnecting = false
+    },
+    onClosed: async ({ permanent }) => {
+      if (shuttingDown || permanent || generation !== connectionGeneration || reconnecting) return
+      reconnecting = true
+      clearTimeout(reconnectTimer)
+      reconnectTimer = setTimeout(() => { if (shuttingDown || generation !== connectionGeneration) return; connect().catch(error => { logger.error({ err: errorLogDetails(error) }, 'Reconnect attempt failed'); reconnecting = false }) }, 3000)
+    }
   })
 }
-async function shutdown(signal) { if (shuttingDown) return; shuttingDown = true; logger.info({ signal }, 'Shutting down'); try { currentSocket?.end?.(new Error('Process shutdown')) } catch {} process.exit(0) }
+async function shutdown(signal) { if (shuttingDown) return; shuttingDown = true; clearTimeout(reconnectTimer); logger.info({ signal }, 'Shutting down'); try { await aiBrain.flush() } catch (error) { logger.error({ err: errorLogDetails(error) }, 'Could not flush conversation history before shutdown') }; try { currentSocket?.end?.(new Error('Process shutdown')) } catch {}; process.exit(0) }
 const handleFatalProcessError = createFatalProcessErrorHandler({ logger, getSocket: () => currentSocket, markShuttingDown: () => { shuttingDown = true; reconnecting = false } })
 process.once('SIGINT', () => shutdown('SIGINT')); process.once('SIGTERM', () => shutdown('SIGTERM'))
 process.on('unhandledRejection', reason => handleFatalProcessError('Unhandled promise rejection', reason))

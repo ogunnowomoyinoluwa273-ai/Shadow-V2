@@ -1,4 +1,48 @@
+# Changelog
 
-- Added `.hmph`: each invocation randomly selects from 25 original local tsundere-style lines and sends the selected text as the caption of an anime `pout` GIF converted through the existing bounded AnimeGifs/FFmpeg service. If retrieval or sending fails, SHADOW sends that same text alone. The command is listed in generated help/menu; this is command-only and does not change SHADOW's normal conversation persona. Added tests for random selection, `pout` provider routing, single-message caption payload, both fallback paths, and help/menu registration. `npm test`: 69 passed, 0 failed; syntax checks passed. Upstream docs list `Pout` and a live API JSON response was verified; GIF bytes and delivery through the user's WhatsApp session were not tested.
+## 2026-10-21
 
-- Replaced MP4 `gifPlayback` reaction outputs with actual animated WebP sticker messages for `.hug`, `.slap`, `.kiss`, `.pat`, `.bonk`, `.cry`, `.bite`, and `.hmph`. The shared AnimeGifs service now uses the installed FFmpeg `libwebp_anim` encoder, validates 512×512 animated WebP output and WhatsApp size/duration limits, retries smaller quality profiles, and caches converted stickers in bounded memory. Baileys receives `{ sticker, isAnimated: true }`; existing reaction labels and `.hmph` lines are sent as companion text, with text-only fallback on retrieval, conversion, or sticker-send failures. Verification: `npm test` 70 passed/0 failed, `npm run check` and all JavaScript syntax checks passed; the installed FFmpeg encoder produced a 5,930-byte structurally valid RIFF/WebP from a synthetic moving GIF. Its animated-WebP decoder check failed with `image data not found`; a static extracted VP8 frame decoded, so authenticated WhatsApp visual delivery remains unverified.
+- Created a modular Baileys v7 WhatsApp bot with Node.js 20+, ESM, commands, handlers, services, utilities, tests, and README documentation.
+- Pinned and verified `@whiskeysockets/baileys@7.0.0-rc14`.
+- Added QR login, optional pairing-code support, auth persistence, reconnect handling, shutdown handling, and credential-safe logging.
+- Added general commands including `.ping`, `.alive`, `.menu`, `.owner`, `.help`, `.info`, `.runtime`, `.groupinfo`, `.admins`, `.rules`, `.support`, and `.quote`.
+- Added group administration commands, anti-link protection, welcome/goodbye messages, warning persistence, and group settings persistence.
+- Fixed owner self-command handling: the original handler discarded every `message.key.fromMe` message, preventing the linked owner account from using commands.
+- Added LID-aware owner handling and accepted explicit prefixed commands from authenticated `fromMe` messages while ignoring ordinary self-messages.
+- Added persistent sudo authorization with `.addsudo`, `.delsudo`, and `.sudos`; recognized commands are authorization-gated.
+- Fixed bot-admin detection for Baileys v7 LID, PN/phone-number, and device-suffixed JIDs.
+- Added mocked regression tests for owner commands, participant commands, unauthorized self-messages, sudo persistence, and bot-admin identity matching.
+- Final sandbox validation reached 10 passing tests and successful syntax checks.
+- Created the reusable `secure-baileys-bot` Manus skill.
+- Started Phase 1 pre-deployment validation and added `PHASE_1_VALIDATION.md`; sandbox baseline remains 10 passing tests with syntax checks passed.
+- Changed the configured bot name from `ACE Bot` to `Shadow` in the local configuration and example template.
+- Redesigned `.menu` with Shadow branding, categorized live commands, dynamic owner/prefix/status data, dynamic owner profile-picture retrieval, and a text fallback; `.help` now uses the same menu renderer.
+- Added menu/profile fallback tests; the suite now passes 12 tests.
+- Changed the configured owner display name to `Miyamaru` while preserving the owner number and authentication state.
+- Started Phase 2 and added `.mute`, `.unmute`, `.slowmode`, safe single-message `.clear`, `.stats`, `.reload`, guarded `.broadcast`, `.disablecmd`, and `.enablecmd`.
+- Added pre-dispatch policy enforcement for muted users, slowmode, disabled commands, moderation metrics, JSON-store reloads, and 15 passing tests.
+- Hardened `.warn` to reject sender/bot targets, clean the reason, cap counts at ten, and report the capped count.
+- Changed unauthorized recognized commands to be silently ignored; denied attempts remain counted in `.stats`.
+- Added the requested media, group-management, utility, and QR commands with 18 passing tests. Added `qrcode@1.5.4`; media conversion uses ffmpeg with graceful failure handling.
+- Fixed FFmpeg detection by preflighting the executable from Node, supporting `FFMPEG_PATH`, using the Windows executable name, and adding a regression test; 19 tests pass.
+- Added Windows `where.exe` and `cmd.exe` absolute-path discovery after the Windows test showed PowerShell could resolve FFmpeg while direct Node lookup could not.
+- Enhanced `.translate` to translate replied text and image/video captions, auto-detect the source through the existing provider, default replies to English, accept language names such as `French`, preserve manual input, and handle empty/unsupported replies cleanly; 23 tests pass.
+- Fixed MyMemory's `'AUTO' is an invalid source language` response by detecting the source language first and sending valid pairs such as `ja|en`; live Japanese-to-English provider verification succeeded and 24 tests pass.
+- Completed the Phase 1 existing-command audit. Repaired shared quoted-context extraction, document captions, wrapped media detection, metrics wiring, promote/demote welcome behavior, and added audit regressions; the suite now passes 27 tests.
+- Fixed `.define` failures caused by Dictionary API HTTP 530 outages by adding a Datamuse fallback and a regression test; the suite now passes 28 tests.
+- Added per-group `.antidelete on|off` with a bounded 24-hour message cache, deletion notifications, text/media recovery attempts, optional `ANTIDELETE_LOG_JID` forwarding, and regression coverage; the suite now passes 30 tests.
+- Fixed anti-delete live behavior for Baileys rc14: Delete for Everyone arrives as `messages.update` with a REVOKE stub, not only `messages.delete`; added the correct nested-key handler and regression coverage; 31 tests pass.
+- Updated recovered text output to include the sender display name, Shadow tagline, and clearly labeled `**Recovered message:**` section; recovery no longer relies on mention metadata.
+- Corrected rc14 key selection: the outer `messages.update` key identifies the deleted message, while `update.key` identifies the revoke protocol envelope. This fixes recovery of the actual deleted text instead of the protocol message.
+- Added the downloader phase: `.yta`, `.ytv`, `.play`, `.tiktok`, `.insta`, `.fb`, and `.twitter`, backed by an argument-safe yt-dlp service with URL validation, 50 MB limit, timeout/concurrency controls, temporary-file cleanup, and per-user expiring play selections. Added downloader validation and session tests; 33 tests pass. Live platform downloads remain pending until yt-dlp is installed on Windows.
+- Fixed downloader size-limit formatting: yt-dlp now receives `50M` rather than the invalid `52428800B` argument. Added a regression test for megabyte/gigabyte formatting.
+- Fixed `.ytv` and `.play` video compatibility by preferring H.264/MP4 formats, forcing MP4 recoding when needed, and matching the WhatsApp MIME type to the actual output extension. Added video argument and MIME regression coverage; 35 tests pass.
+- Hardened downloader completion: added FFprobe discovery and final stream validation, reject empty/partial/multiple outputs, conditionally convert incompatible video to H.264/AAC MP4 or audio to MP3, and verify the final file again before sending. Local generated MP4/MP3 fixtures passed end-to-end validation and cleanup.
+- Optimized downloader selection with audio-only sources, a 720p video cap, bounded fragment concurrency/retries, and socket timeouts. Reworked `.ping` to report a local stopwatch around the WhatsApp send acknowledgement instead of unreliable server-timestamp math; added regressions, bringing the suite to 37 passing tests.
+- Corrected `.play` numbered selections to use the audio downloader path instead of mistakenly downloading a video payload; added a selection regression test. The suite now passes 38 tests.
+- Redesigned `.menu` as a Shadow-branded Mellow MD-inspired command panel with live command count, time/day, version, uptime, prefix, access labels, and implemented-command categories. Separated `.help` into the Shadow control center, added `.help <command>` details and unknown-command guidance, and added synchronized menu/help tests; 40 tests pass.
+- Simplified `.menu` into a command directory: descriptions, dashes, and permission labels were removed, and each live command now renders with the configured prefix and Unicode-bold uppercase text. `.help` remains descriptive and unchanged; 40 tests pass.
+- Changed the first `.ping` response to `Pong! You think you can match my speed? ⚡`; the separate send-acknowledgement measurement remains unchanged.
+- Removed the second `.ping` timing message. `.ping` now sends exactly one message: `Pong! You think you can match my speed? ⚡`.
+- Updated `.ping` to append a dynamically measured bot-side response latency on the same line as `Pong! You think you can match my speed? ⚡: Nms`; no separate acknowledgement message is sent.
+- Made `.ping` timing explicit with `node:perf_hooks` `performance.now()`, a testable elapsed-millisecond helper, and receipt-time injection from the message handler; 41 tests pass.

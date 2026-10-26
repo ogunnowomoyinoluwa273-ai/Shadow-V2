@@ -1,0 +1,24 @@
+{
+  "120363412517016155@g.us:2349166712534:28@s.whatsapp.net": [
+    {
+      "id": "659e6f18-6e9c-4fbf-a34d-2af231ed27e0",
+      "text": "User's favorite color is blue",
+      "createdAt": "2026-10-24T19:25:21.411Z",
+      "source": "gemini"
+    }
+  ],
+  "2349166712534@s.whatsapp.net": [
+    {
+      "id": "2e373719-72b0-4d30-894c-d4e5df38137d",
+      "text": "User's favorite color is dark blue",
+      "createdAt": "2026-10-24T20:15:34.464Z",
+      "source": "gemini"
+    },
+    {
+      "id": "44cc9d20-2ebf-41c1-98c4-76e0c5daeda9",
+      "text": "My favorite color is dark blue.",
+      "createdAt": "2026-10-24T20:46:38.138Z",
+      "source": "explicit-conversation"
+    }
+  ]
+}
