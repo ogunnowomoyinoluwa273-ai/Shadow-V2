@@ -20,5 +20,10 @@
     "pino": "^9.6.0",
     "qrcode": "^1.5.4",
     "qrcode-terminal": "^0.12.0"
+  },
+  "allowScripts": {
+    "@google/genai@2.31.0": true,
+    "@whiskeysockets/baileys@7.0.0-rc14": true,
+    "protobufjs@7.6.6": true
   }
 }
