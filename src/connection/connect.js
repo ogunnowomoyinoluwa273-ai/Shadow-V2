@@ -35,7 +35,8 @@ export function makeSafeAuthState(state, log = logger) {
 export async function startConnection({ onSocket, onClosed }) {
   const { state: rawState, saveCreds } = await useMultiFileAuthState(config.authDir)
   const state = makeSafeAuthState(rawState, logger)
-  const sock = markBotMessages(makeWASocket({ auth: state, browser: Browsers.ubuntu(config.botName), logger, printQRInTerminal: false, markOnlineOnConnect: false, syncFullHistory: false, generateHighQualityLinkPreview: false }), { emoji: config.botMessageReaction, logger })
+  // Pairing-code registration expects a canonical browser label; a custom label can make WhatsApp reject companion_hello.
+  const sock = markBotMessages(makeWASocket({ auth: state, browser: Browsers.ubuntu('Chrome'), logger, printQRInTerminal: false, markOnlineOnConnect: false, syncFullHistory: false, generateHighQualityLinkPreview: false }), { emoji: config.botMessageReaction, logger })
   sock.ev.on('creds.update', saveCreds)
   sock.ev.on('connection.update', async ({ connection, lastDisconnect, qr }) => {
     if (qr && !sock.authState.creds.registered && !pairingCodeRequested) {
