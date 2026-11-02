@@ -9,6 +9,9 @@ import { createMessageCache, recoverDeletedMessage } from '../services/antiDelet
 
 export function attachHandlers({ sock, commands, settings, config, seen, aiBrain = null, reactions = null, metrics = {} }) {
   const messageCache = createMessageCache()
+  const handledDeletes = new Set()
+  const ownerDm = String(config.ownerNumber || '').replace(/\D/g, '')
+  const ownerDmJid = ownerDm ? `${ownerDm}@s.whatsapp.net` : ''
   const onAutoDelete = async message => { try {
     const jid = message.key.remoteJid; if (!isGroupJid(jid)) return
     const metadata = await sock.groupMetadata(jid); const sender = getSender(message)
@@ -24,10 +27,13 @@ export function attachHandlers({ sock, commands, settings, config, seen, aiBrain
     for (const key of keys) {
       try {
         const jid = key?.remoteJid
-        if (!isGroupJid(jid) || !settings.get(jid).antiDelete) continue
+        const deleteId = jid && key?.id ? `${jid}:${key.id}` : ''
+        if (!jid || !settings.get(jid).antiDelete || handledDeletes.has(deleteId)) continue
+        if (deleteId) { handledDeletes.add(deleteId); if (handledDeletes.size > 5000) handledDeletes.delete(handledDeletes.values().next().value) }
         const original = messageCache.take({ ...key, remoteJid: jid })
-        if (!original) { await sock.sendMessage(jid, { text: 'A message was deleted, but Shadow no longer has a recoverable copy.' }); continue }
-        const result = await recoverDeletedMessage({ sock, original, destination: jid, logDestination: config.antiDeleteLogJid })
+        const destination = isGroupJid(jid) ? (ownerDmJid || jid) : jid
+        if (!original) { await sock.sendMessage(destination, { text: 'A message was deleted, but no recoverable copy is available.' }); continue }
+        const result = await recoverDeletedMessage({ sock, original, destination, logDestination: config.antiDeleteLogJid })
         if (typeof metrics.moderationActions === 'number') metrics.moderationActions += 1
         logger.info({ groupId: jid, sender: result.sender, type: result.type, restored: result.restored }, 'Anti-delete recovery completed')
       } catch (error) { logger.warn({ err: errorLogDetails(error) }, 'Anti-delete recovery failed') }

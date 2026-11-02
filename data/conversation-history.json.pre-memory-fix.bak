@@ -1,0 +1,1188 @@
+{
+  "120363412517016155@g.us:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "what can ya do for me today?"
+      },
+      {
+        "role": "model",
+        "content": "Hey Miyamaru! Not much changes on my end—I'm just here to chat, help you look things up, or handle whatever tasks you've got lined up. \n\nWhat's on your mind today?"
+      },
+      {
+        "role": "user",
+        "content": "yo"
+      },
+      {
+        "role": "model",
+        "content": "Yo. What's up, boss?"
+      },
+      {
+        "role": "user",
+        "content": "who made you?"
+      },
+      {
+        "role": "model",
+        "content": "You did, Miyamaru. ♠️"
+      }
+    ],
+    "updatedAt": 1793038491177
+  },
+  "120363423555735096@g.us:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "yo"
+      },
+      {
+        "role": "model",
+        "content": "Yo, boss. What's up?"
+      }
+    ],
+    "updatedAt": 1793032928288
+  },
+  "120363412517016155@g.us:17206192644250@lid": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "who will win best men's coach tonight"
+      },
+      {
+        "role": "model",
+        "content": "Not sure off the top of my head—who's nominated for it tonight?"
+      }
+    ],
+    "updatedAt": 1793049344520
+  },
+  "8298212384985@lid:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "say hey"
+      },
+      {
+        "role": "model",
+        "content": "Hey! What's up?"
+      },
+      {
+        "role": "user",
+        "content": "The user addressed you by saying only “Shadow”. Reply with a short, natural greeting and ask what they need."
+      },
+      {
+        "role": "model",
+        "content": "Hey! What do you need?"
+      }
+    ],
+    "updatedAt": 1793002747465
+  },
+  "120363420315946213@g.us:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "heard that?\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: AC3C4CAFEA898519A19F760B79FFCF0C.\nquoted text:\nMkay Shadow hold for a bit\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Loud and clear. What's up?"
+      },
+      {
+        "role": "user",
+        "content": "I said I'm going to stop updating you for a bit\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: 3EB04730607A182A44AB91.\nquoted text:\nLoud and clear. What's up?\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Got it, boss. Take all the time you need. I'll be right here whenever you're ready to pick back up."
+      },
+      {
+        "role": "user",
+        "content": "wanna b peak?"
+      },
+      {
+        "role": "model",
+        "content": "Always, boss. What are we conquering today?"
+      }
+    ],
+    "updatedAt": 1793033525240
+  },
+  "271786017058858@lid:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "heyyy"
+      },
+      {
+        "role": "model",
+        "content": "Hey! What's up?"
+      }
+    ],
+    "updatedAt": 1793009492295
+  },
+  "chat:120363422524063352@g.us": {
+    "messages": [
+      {
+        "id": "3AA0F8CDDC38E94A98AA",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "This has expired o",
+        "timestamp": 1793051969000
+      },
+      {
+        "id": "AC1FF082A273260DFFEA582408078A3A",
+        "sender": "40278790529078@lid",
+        "speaker": "martins Muhammad fuad ola",
+        "role": "participant",
+        "text": "https://www.camel1.tv/streams/27551_64042a5a_1792929507154?u=ZjRjNjZmNGYtOGZmYy00NTBhLTkyMzQtOGFlYWZmNTRjODhl",
+        "timestamp": 1793052149000
+      },
+      {
+        "id": "3A293CDF02F239AB6156",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "Any other link ?",
+        "timestamp": 1793052628000
+      },
+      {
+        "id": "AC2CCA5EB147BC0C6E4964A3FEB0CADD",
+        "sender": "132852549165272@lid",
+        "speaker": "oluwagbotemidairo",
+        "role": "participant",
+        "text": "https://www.youtube.com/live/dR2-tJ4XYjQ?si=CULJjAGNGRa3FmHF",
+        "timestamp": 1793052681000
+      }
+    ],
+    "updatedAt": 1793052675813
+  },
+  "chat:120363421147669061@g.us": {
+    "messages": [
+      {
+        "id": "2AD4C0849351D1B65FE1",
+        "sender": "60044230025277@lid",
+        "speaker": "Aishat",
+        "role": "participant",
+        "text": "Social works should start checking",
+        "timestamp": 1793038252000
+      },
+      {
+        "id": "2AB36A520B7F8F86403A",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "Yeeeee have you seen yours??",
+        "timestamp": 1793038268000
+      },
+      {
+        "id": "AC70E8152CF39B98B5100EE25E942745",
+        "sender": "129184277987551@lid",
+        "speaker": "🌸Happiness🌸",
+        "role": "participant",
+        "text": "Sociology too",
+        "timestamp": 1793038283000
+      },
+      {
+        "id": "2A69B084637EB4FDE558",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "You’ve seen your own",
+        "timestamp": 1793038295000
+      },
+      {
+        "id": "AC7C310DA45EC4A048DE988C36705EE5",
+        "sender": "135282963787848@lid",
+        "speaker": "F. Alexander",
+        "role": "participant",
+        "text": "Pls. Update us with the points.",
+        "timestamp": 1793038322000
+      },
+      {
+        "id": "AC96DD022A3317AFA34C34E5711896DB",
+        "sender": "129184277987551@lid",
+        "speaker": "🌸Happiness🌸",
+        "role": "participant",
+        "text": "Not mine \nA friend",
+        "timestamp": 1793038353000
+      },
+      {
+        "id": "2A1D37F756E4296E422B",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "Ohh",
+        "timestamp": 1793038369000
+      },
+      {
+        "id": "A5BCAA3D9B5A5F96BFD160550CBC7445",
+        "sender": "210943023812815@lid",
+        "speaker": "Naya's Essence",
+        "role": "participant",
+        "text": "Who has seen for social work?",
+        "timestamp": 1793038417000
+      },
+      {
+        "id": "AC79828D205C66A6EBC1096E8DF28D0B",
+        "sender": "218648883015803@lid",
+        "speaker": "ⓀⒾⓃⒼ🏀👑",
+        "role": "participant",
+        "text": "Go nd check your portal",
+        "timestamp": 1793038440000
+      },
+      {
+        "id": "2A56006C35E950BB72C3",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "I think @60044230025277",
+        "timestamp": 1793038451000
+      },
+      {
+        "id": "A5A9F2A52BF89184D3BD60C6812CD19B",
+        "sender": "210943023812815@lid",
+        "speaker": "Naya's Essence",
+        "role": "participant",
+        "text": "Mine hasn't changed",
+        "timestamp": 1793038470000
+      },
+      {
+        "id": "ACC2B4859D97AB344383164D54BB038E",
+        "sender": "218648883015803@lid",
+        "speaker": "ⓀⒾⓃⒼ🏀👑",
+        "role": "participant",
+        "text": "Dw \nIt will change soon 🙏",
+        "timestamp": 1793038499000
+      },
+      {
+        "id": "2AB95EF49A77A4A3A1AE",
+        "sender": "60044230025277@lid",
+        "speaker": "Aishat",
+        "role": "participant",
+        "text": "Yh processed",
+        "timestamp": 1793038562000
+      },
+      {
+        "id": "2AEB2D1DA772BA717674",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "That what yours is showing",
+        "timestamp": 1793038581000
+      },
+      {
+        "id": "2A17012098147184C160",
+        "sender": "217325965967367@lid",
+        "speaker": "Taylor’s Delivery",
+        "role": "participant",
+        "text": "How many point",
+        "timestamp": 1793038583000
+      },
+      {
+        "id": "AC32726EABFB6231CA38F65ACB1DC197",
+        "sender": "34227114475716@lid",
+        "speaker": "Tiffany",
+        "role": "participant",
+        "text": "There's statistics for 10 points 🧍🏽‍♀️",
+        "timestamp": 1793038954000
+      }
+    ],
+    "updatedAt": 1793038949468
+  },
+  "chat:120363422521601331@g.us": {
+    "messages": [
+      {
+        "id": "A5C344F7C0974261FA3790C414B17D84",
+        "sender": "31332121977016@lid",
+        "speaker": "Becky ARK Designs",
+        "role": "participant",
+        "text": "*Google Free Gemini Pro 2027 for African Students* \n\n_Eligible university students aged 18 and above in participating Sub-Saharan African countries can access Google AI Plus free for 12 months._ \n\n *Benefits:* \n\n- Advanced Gemini AI features for studying, research and assignments\n- AI-powered quizzes, study guides and learning tools\n- Image and video generation tools\n- 400 GB of cloud storage\n\n*Who Can Apply:* \n\n- Students aged 18 and above enrolled in a higher education institution\n- Applicants residing in participating Sub-Saharan African countries\n\n*Apply here:* \n\nhttps://jobs.smartyacad.com/google-free-gemini-pro-2027-for-african-students/",
+        "timestamp": 1793012552000
+      },
+      {
+        "id": "A53A7F774F34DE27575CD49D8EF5F30A",
+        "sender": "31332121977016@lid",
+        "speaker": "Becky ARK Designs",
+        "role": "participant",
+        "text": "🔥 Application Closes in Few Hours!\n\nCohort 10 Application for the Tech4Africans Scholarship Bootcamp Closes soon!\n\nApply Here ASAP👇\nhttps://techcrush.pro/scholarship/apply\nhttps://techcrush.pro/scholarship/apply\n\nApply and share with African Youths around You who needs it!\n@all",
+        "timestamp": 1793015949000
+      }
+    ],
+    "updatedAt": 1793029677955
+  },
+  "chat:120363431472395883@g.us": {
+    "messages": [
+      {
+        "id": "3A22167CB6DD7495BE6C",
+        "sender": "129489271029960@lid",
+        "speaker": "Kennis",
+        "role": "participant",
+        "text": "*READY TO MAKE A’s THIS SEMESTER?* 📚 🔥 \nYour journey to academic excellence begins with the right preparation! ❤️🔥\n\nIntroducing *TUTOR INFINITY* — your partner in academic excellence, mentorship, and structured preparation.\n\n🎯 Exclusively for *100L Science Students* with a first-class mindset.\n\nThe waiting list group: \nhttps://chat.whatsapp.com/DvQPEO0qsYeIuo2PRxueKb?s=cl&p=a&mlu=4&ilr=4\n\n#TutorInfinity #AceThisSemester",
+        "timestamp": 1793051588000
+      },
+      {
+        "id": "3AE7252D3CAA28D7CD93",
+        "sender": "29567293124824@lid",
+        "speaker": "Anjola",
+        "role": "participant",
+        "text": "Hey for primary school part for the education history what is the grade to put is it distinction or merit",
+        "timestamp": 1793052744000
+      },
+      {
+        "id": "3ABBD25E18F09B63EC6E",
+        "sender": "74355044278471@lid",
+        "speaker": "AK",
+        "role": "participant",
+        "text": "Merit",
+        "timestamp": 1793052766000
+      },
+      {
+        "id": "3AB14E6779E819B40BB1",
+        "sender": "29567293124824@lid",
+        "speaker": "Anjola",
+        "role": "participant",
+        "text": "And what if i don’t remember the exact date I vacated from primary school what do I put",
+        "timestamp": 1793052898000
+      },
+      {
+        "id": "3A2C7DB5BD80D8F535EC",
+        "sender": "74355044278471@lid",
+        "speaker": "AK",
+        "role": "participant",
+        "text": "I dunno 🤷‍♀️ \n\nI think you can put any date",
+        "timestamp": 1793052945000
+      },
+      {
+        "id": "ACBD6404C08E4E9F9F70E9DBE91810BC",
+        "sender": "8298212384985@lid",
+        "speaker": "~ire",
+        "role": "participant",
+        "text": "what of course of study?",
+        "timestamp": 1793053030000
+      }
+    ],
+    "updatedAt": 1793053025118
+  },
+  "chat:120363400851680795@g.us": {
+    "messages": [
+      {
+        "id": "ACC50D998471DBC10CCE210CDCF24187",
+        "sender": "42129887912145@lid",
+        "speaker": "Ola",
+        "role": "participant",
+        "text": "✅DREAM. PREPARE. SUCCEED.\n\n➡️Are you aiming for a 300+ in your 2027 UTME? Your path to academic excellence starts right here!\n\nScience Clinic Tutorial presents a ONE-MONTH POWERFUL ONLINE ENGAGEMENT specifically designed for all 2027 Science Aspirants. Get ready to transform your preparation and secure your university admission!\n\n*🔥WHY CHOOSE SCIENCE CLINIC?*\n- Proven Track Record\n- Direct consultation \n- Complete Support: Simple, easy-to-understand breakdowns of complex topics. \n\nREADY TO SECURE YOUR UTME SUCCESS? Contact👇 \nFor Enquiries & Registration (WhatsApp):\n👉 07012807528\nOr join our *official WhatsApp group* \nhttps://chat.whatsapp.com/HnBv3SopyIz0LpVE3QW3yx?s=cl&p=a&mlu=4&ilr=4",
+        "timestamp": 1793037158000
+      }
+    ],
+    "updatedAt": 1793037152939
+  },
+  "chat:120363406712624366@g.us": {
+    "messages": [
+      {
+        "id": "3EB0C72602BBDAF9DCAC66",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "WACCBIP-DAAD Master Scholarship in Ghana 2027\n\nDAAD In-Country/In-Region scholarships at West African Centre for Cell Biology of Infectious Pathogens (WACCBIP), University of Ghana, Ghana, 2027\n\nBenefits\nTuition Fees\nStudy and research allowance\nThesis publishing costs\nMonthly Scholarship (Accommodation, food etc.)\nTravel allowance (In-Region only)\nHealth insurance (In-Region only)\n\nDeadline: November 12, 2026\n\nApply Now\nhttps://www.scholarshipset.com/s/8848",
+        "timestamp": 1793031722000
+      }
+    ],
+    "updatedAt": 1793032582551
+  },
+  "chat:120363402019539335@g.us": {
+    "messages": [
+      {
+        "id": "ACFD9E4A3939EAB69FEE0BDCDBB1FFF2",
+        "sender": "259283367247979@lid",
+        "speaker": "عبد الغفار",
+        "role": "participant",
+        "text": "🤧🤧🤧",
+        "timestamp": 1793034466000
+      }
+    ],
+    "updatedAt": 1793034461081
+  },
+  "chat:120363420315946213@g.us": {
+    "messages": [
+      {
+        "id": "AC9AF3F57BBB85A0FC304120FBB87102",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "Wait fess\nYou dey mad?\nAll my love for @175797792973004 down the drain🥀",
+        "timestamp": 1793036350000
+      },
+      {
+        "id": "ACA1A17C475E381A18B860FAC0054C4F",
+        "sender": "13490760749203@lid",
+        "speaker": "Specstar27",
+        "role": "participant",
+        "text": "And me",
+        "timestamp": 1793037249000
+      },
+      {
+        "id": "AC71E43455B48B7C0459346C1DC1AF4C",
+        "sender": "126078848860187@lid",
+        "speaker": "Tessy-Sama👸🏽❤️‍🩹",
+        "role": "participant",
+        "text": "Once in a while",
+        "timestamp": 1793037383000
+      },
+      {
+        "id": "ACFEA5004B45B566189CDA950E38D422",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "See this one",
+        "timestamp": 1793037622000
+      },
+      {
+        "id": "ACFDB5BA114D3290104C86E343E7961C",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "Don't mind him\nHe doesn't value you\n\nMeet someone like that does",
+        "timestamp": 1793037651000
+      },
+      {
+        "id": "AC867DFC3096FE5CBFD1AD7DFF54D1F5",
+        "sender": "221191084232904@lid",
+        "speaker": "Ohize🫟",
+        "role": "participant",
+        "text": "The way you come and go randomly ehh😂",
+        "timestamp": 1793037668000
+      },
+      {
+        "id": "AC0A29DEAD4676339057FAE33C57369B",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "Do you have male stickers?",
+        "timestamp": 1793037763000
+      },
+      {
+        "id": "AC63A228D94FAADA99235D9E25209BA9",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "It's flair",
+        "timestamp": 1793037773000
+      },
+      {
+        "id": "AC303FAB5EDAB49C959BC68DE6E5A37F",
+        "sender": "221191084232904@lid",
+        "speaker": "Ohize🫟",
+        "role": "participant",
+        "text": "Flair?\nOmo😂\n\nIt's fine sha",
+        "timestamp": 1793037857000
+      },
+      {
+        "id": "ACEE4B934148DE14986D997AF6D4961B",
+        "sender": "13490760749203@lid",
+        "speaker": "Specstar27",
+        "role": "participant",
+        "text": "@221191084232904 u de hear this guy",
+        "timestamp": 1793038409000
+      },
+      {
+        "id": "ACCD8AE342F0E95E97281D05A0707D68",
+        "sender": "170506124804234@lid",
+        "speaker": "Vincent: Ado's Week 🎵✨",
+        "role": "participant",
+        "text": "They're scattered, why?",
+        "timestamp": 1793038410000
+      },
+      {
+        "id": "AC65FD786F59189C8E92C5F573AD6539",
+        "sender": "13490760749203@lid",
+        "speaker": "Specstar27",
+        "role": "participant",
+        "text": "@170506124804234 listen to this",
+        "timestamp": 1793038424000
+      },
+      {
+        "id": "AC60B71FAED9AFF17F4E641F87DBAC19",
+        "sender": "13490760749203@lid",
+        "speaker": "Specstar27",
+        "role": "participant",
+        "text": "Guy u wan start to de ask gay why u de ask for male stickers Instead of female stickers",
+        "timestamp": 1793038486000
+      },
+      {
+        "id": "AC09144E39DF2B1E7F78854A990DAFC1",
+        "sender": "170506124804234@lid",
+        "speaker": "Vincent: Ado's Week 🎵✨",
+        "role": "participant",
+        "text": "Let bobo shoot hin shot. Even if hin be Garnacho, leave am.",
+        "timestamp": 1793038495000
+      },
+      {
+        "id": "ACD663BBB6B6AD3A833FC0AA9638A0E6",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "I need those kinds not all these rubbish you dey send",
+        "timestamp": 1793039115000
+      },
+      {
+        "id": "AC0E413FD7A77CA01EBC580E329BF17B",
+        "sender": "87381814284403@lid",
+        "speaker": "Natty",
+        "role": "participant",
+        "text": "midaiwo",
+        "timestamp": 1793039131000
+      }
+    ],
+    "updatedAt": 1793039125725
+  },
+  "chat:120363412517016155@g.us": {
+    "messages": [
+      {
+        "id": "shadow:ACAC110825AE6E9FA37B9CE3DFDD7B8D",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Not much, just hanging out here on WhatsApp and keeping an eye on things. What's up with you?",
+        "timestamp": 1793049248313
+      },
+      {
+        "id": "shadow:ACE075D8E5CDA1ACE1722B0BE00B8C1B",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Survival mode, huh? Respect. Some days just getting through the day is the whole achievement. \n\nNeed to vent, or just looking for a distraction?",
+        "timestamp": 1793049267016
+      },
+      {
+        "id": "shadow:ACB89C1E0BFCBE7A544F8B5935C63B78",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "I'm totally down for that. Hit me with your character—let's see if I can figure it out in ten questions or less. Ask away!",
+        "timestamp": 1793049316374
+      },
+      {
+        "id": "shadow:ACDA4E672C75F1AA66A8190AC7BE508E",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "You heard 'em, boss. The floor is yours—fire away with whatever you've been cooking up.",
+        "timestamp": 1793049340623
+      },
+      {
+        "id": "3EB042EBE6F80FEA1C92D3",
+        "sender": "17206192644250@lid",
+        "speaker": "Ɓƪʊɛ",
+        "role": "participant",
+        "text": "shadow who will win best men's coach tonight",
+        "timestamp": 1793049347000
+      },
+      {
+        "id": "shadow:3EB042EBE6F80FEA1C92D3",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Not sure off the top of my head—who's nominated for it tonight?",
+        "timestamp": 1793049345011
+      },
+      {
+        "id": "shadow:AC1DC29A03EB2F83988968B374FB1A94",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Challenge accepted. Let's see how quick this is. \n\nFirst question: Is your character from an anime or manga?",
+        "timestamp": 1793049370935
+      },
+      {
+        "id": "shadow:AC1F3E7E230916C2F62A283BD8439884",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Yeah, absolutely. From an anime it is. \n\nWhat's next?",
+        "timestamp": 1793049389713
+      },
+      {
+        "id": "shadow:AC0822F59A16170F6B534AF213BB0B79",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Challenge accepted. Let's see if I can read your mind. \n\nFirst question: Is this character human, or are we dealing with some supernatural, alien, or non-human creature?",
+        "timestamp": 1793049411061
+      },
+      {
+        "id": "shadow:ACD3F50D6C0EF33F23A11F1F9700612D",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Fair enough. Even the best of us have our flaws. \n\nWhat's up, Miyamaru?",
+        "timestamp": 1793049451236
+      },
+      {
+        "id": "shadow:AC94FC61471231C16DD41E44DA67F0CD",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Yep, totally human. \n\nWhat's the next question?",
+        "timestamp": 1793049466905
+      },
+      {
+        "id": "shadow:AC75538C09F554BDDEE75243B36DED24",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Takes one to know one, Boss. What's up?",
+        "timestamp": 1793049482296
+      },
+      {
+        "id": "shadow:AC64D2D8F66F9D9E6DCE69E409CE483F",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Fair point, Boss. I might've pushed my luck a little there. What's actually on your mind?",
+        "timestamp": 1793049495403
+      },
+      {
+        "id": "shadow:AC4B7E22EBA341AA9E61AE4D20B4C68B",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Take your time, boss. Let's hope the memory surgery goes better this time.",
+        "timestamp": 1793049531606
+      },
+      {
+        "id": "shadow:AC48159367C90F145E61F91B65A35062",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "I can't run that command or change sudo permissions here, boss. That's outside what I'm set up to do.",
+        "timestamp": 1793050043465
+      },
+      {
+        "id": "ACB34874BFB2B2E1BCDEBCAAC26AF7DC",
+        "sender": "186564873322685@lid",
+        "speaker": "Ayo🌸",
+        "role": "participant",
+        "text": "Yupp",
+        "timestamp": 1793050075000
+      }
+    ],
+    "updatedAt": 1793050069168
+  },
+  "chat:120363421282734735@g.us": {
+    "messages": [
+      {
+        "id": "3EB04C215283A38F84EA89",
+        "sender": "61818034761930@lid",
+        "speaker": "61818034761930@lid",
+        "role": "participant",
+        "text": "Serviced Mini-Flat\n\nLocation\nAbule Oja\n\nCosts Involved\n- Rent: ₦6M per year\n- Agreement: ₦300k\n- Commission: ₦300k\n- Caution Fee: ₦200k\n- Service Charge: ₦300k\n- Total Package: ₦7.1M\n\nFacilities/Amenities\n✅ A/C\n✅ Fridge\n✅ TV\n✅ Microwave\n✅ Washing Machine\n✅ Kitchen Cabinets\n✅ Wardrobe\n✅ POP Ceiling\n✅ Serviced\n\n*D&D Properties*\n📞 09167691201\n\n4",
+        "timestamp": 1793051371000
+      }
+    ],
+    "updatedAt": 1793051382839
+  },
+  "chat:120363426090480228@g.us": {
+    "messages": [
+      {
+        "id": "3EB0A397BB4E0DA6CE9EAF",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "WAAW Foundation Scholarship for Female Students 2026/2027\n\nApplication for WAAW Foundation opens 31st October, 2026\nWAAW Foundation Scholarship enables female college students in Africa to pursue their studies in a STEM-related course. \n\nBenefits\nThe WAAW Foundation scholarship is a one-time award of $500.\n\nApply Now\nhttps://www.scholarshipair.com/s/10268\n\nShare Across",
+        "timestamp": 1793016997000
+      },
+      {
+        "id": "3EB0CE322B95B69446F88E",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "Senator Abiola Ajimobi Foundation Educational Grant 2026\n\nApplication for Senator Abiola Ajimobi Foundation Educational Grant is Open.\n\nBenefits\nFinancial support for university, polythenic and college of education students \nOpportunity to excel academically and make a postive impact on the society.\nEmpowernment to achieve your full potential \nSelected applicants will be offered an educational grant of N150,000\n\nDeadline: Not Specified\n\nApply Now\nhttps://www.scholarshipair.com/s/10269",
+        "timestamp": 1793023124000
+      },
+      {
+        "id": "3EB0D4E6C9CE882A812C9C",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "Commonwealth Shared Masters Scholarship in UK 2027/2028\n\nApplications for Commonwealth Shared Scholarships for the 2027/28 academic year will open on Tuesday 10 November 2026. The scholarships are for study in the UK beginning in September/October 2027.\n\nBenefits\nTuition fee\nTravel expenses\nLiving allowance\nThesis grant\n\nDeadline: December 8, 2026\n\nApply Now\nhttps://www.scholarshipair.com/s/10270",
+        "timestamp": 1793027037000
+      },
+      {
+        "id": "3EB04DFDA38354C7A73E0C",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "EFCC Recruitment Application 2026\n\nThe Economic and Financial Crimes Commission is inviting qualified Nigerians to apply for positions across four cadres, this is an opportunity for you to apply. \n\nGeneral Requirements\nBe a Nigerian citizen.\nPossess basic computer skills.\nDeclare all academic and professional qualifications during the application.\nBe medically fit and provide evidence of fitness from a government-approved hospital.\nHave no tattoos on any part of the body.\nHave no criminal record.\n\nDeadline: 1st November, 2026\n\nApply Now\nhttps://www.scholarshipair.com/s/10271",
+        "timestamp": 1793028510000
+      },
+      {
+        "id": "3EB02D8CD75FAF988D19B5",
+        "sender": "222801663389752@lid",
+        "speaker": "Maryjaneey",
+        "role": "participant",
+        "text": "Awareness Africa Education Fund 2026/2027 (University Scholarship)\n\nThe Awareness Africa Education Fund is a need-based scholarship created to support a Nigerian student commencing undergraduate studies at a federal or state university in the 2026/2027 academic session.\n\nBenefits\nThe scholarship will provide financial support of up to N500,000 towards school fees and compulsory registration fees.\n\nDeadline: 31st October,2026\n\nApply Now\nhttps://www.scholarshipair.com/s/10272",
+        "timestamp": 1793030618000
+      }
+    ],
+    "updatedAt": 1793030614987
+  },
+  "chat:120363143072347952@g.us": {
+    "messages": [
+      {
+        "id": "2A38F628A4C7A1D59CB6",
+        "sender": "179860899123454@lid",
+        "speaker": "TRIBE",
+        "role": "participant",
+        "text": "*DIRECT BRIEF* 📌\n\n\nTWO MAN ROOM FOR FEMALE 📌\n\n📍ABULE OJA\n\nRENT:800K📌\nLEGAL FEE:100K📌\nAGENCY :100K📌\nCAUTION FEE:50K📌\n\nSERVICE CHARGE:12, 500 MONTHLY PER SPACE 📌\n\n\nAC\nFAN\nSECURITY\nMICROWAVE\nFRIDGE\nBALCONY\n24/7 SECURITY\nGAS COOKER",
+        "timestamp": 1793034357000
+      }
+    ],
+    "updatedAt": 1793034352340
+  },
+  "chat:120363417843779956@g.us": {
+    "messages": [
+      {
+        "id": "AC51207BAF9B48EADD57D4E343BCF34E",
+        "sender": "143211976765554@lid",
+        "speaker": "Mitsuki（AniHoshi）",
+        "role": "participant",
+        "text": "FripSide『Snow White』MV",
+        "timestamp": 1793049742000
+      }
+    ],
+    "updatedAt": 1793049736448
+  },
+  "chat:120363423555735096@g.us": {
+    "messages": [
+      {
+        "id": "shadow:AC0FCA3AF808B94C0DFD997856EEEEFC",
+        "sender": "shadow",
+        "speaker": "Shadow",
+        "role": "shadow",
+        "text": "Yo, boss. What's up?",
+        "timestamp": 1793032928761
+      }
+    ],
+    "updatedAt": 1793032928761
+  },
+  "47846187360337@lid:2349166712534:28@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "can you download this\nQuoted WhatsApp message context — another participant; sender identity: 47846187360337@lid; message type: extendedTextMessage, stanza id: 3AAABEC2BEC44C3E7B11.\nquoted text:\nhttps://youtube.com/shorts/bSGrgwf8nUQ?si=KwzjiXLx31BHhJ1O\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      }
+    ],
+    "updatedAt": 1793032785817
+  },
+  "chat:120363177987272654@g.us": {
+    "messages": [
+      {
+        "id": "3A1BE66F14CC31022D17",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "Good evening everybody \nI left my cylinder in the kitchen and I know the last time I was here I saw it in the kitchen. I can’t find it anywhere in the hostel. Does anybody know anything about this?",
+        "timestamp": 1793033305000
+      },
+      {
+        "id": "AC70857F022E5702C2861B049A441E2D",
+        "sender": "115084269453376@lid",
+        "speaker": "D***R",
+        "role": "participant",
+        "text": "I doubt it's upstairs but you can check there",
+        "timestamp": 1793033912000
+      },
+      {
+        "id": "AC5ECF1BDC2296006FD745FC0F450C16",
+        "sender": "142588636041283@lid",
+        "speaker": "Divine",
+        "role": "participant",
+        "text": "Make nothing do my cylinder oooo. Blood go flow.",
+        "timestamp": 1793033997000
+      },
+      {
+        "id": "3ACEF51FC572E1F390A9",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "I’ve checked",
+        "timestamp": 1793034045000
+      },
+      {
+        "id": "AC0368282A8C678E514C0CEE02D7DAE3",
+        "sender": "115084269453376@lid",
+        "speaker": "D***R",
+        "role": "participant",
+        "text": "And you didn't see it??",
+        "timestamp": 1793034112000
+      },
+      {
+        "id": "3AAC4D8D129BA4CD9CE9",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "Yeah",
+        "timestamp": 1793034119000
+      },
+      {
+        "id": "3A89A44FD099B0B56F19",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "It was in the kitchen when I came here last month",
+        "timestamp": 1793034139000
+      },
+      {
+        "id": "ACA92290A1255E9D1AB7C250AE5CCF55",
+        "sender": "115084269453376@lid",
+        "speaker": "D***R",
+        "role": "participant",
+        "text": "It should still be there nau",
+        "timestamp": 1793034378000
+      },
+      {
+        "id": "3A125E8BC1D2B55585B2",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "Can’t find it anywhere",
+        "timestamp": 1793034665000
+      },
+      {
+        "id": "3A9060F5634CD5D5DC98",
+        "sender": "50452997648425@lid",
+        "speaker": "Rilwan!!!",
+        "role": "participant",
+        "text": "If there’s nothing wrong with the pad lock please use your key",
+        "timestamp": 1793034706000
+      },
+      {
+        "id": "ACDED813AC04B13B7B8B63894C88063D",
+        "sender": "142588636041283@lid",
+        "speaker": "Divine",
+        "role": "participant",
+        "text": "Please everyone should go and cut their freaking keys. No more borrowing and throwing of keys this session. Tank you.",
+        "timestamp": 1793034757000
+      },
+      {
+        "id": "AC2430E20C28E41F1C4B1DBD98B39254",
+        "sender": "142588636041283@lid",
+        "speaker": "Divine",
+        "role": "participant",
+        "text": "Also make nothing do my cylinder oooo. I dey quick  vex.",
+        "timestamp": 1793034794000
+      }
+    ],
+    "updatedAt": 1793034789122
+  },
+  "chat:120363430712733903@g.us": {
+    "messages": [
+      {
+        "id": "AC200F55C3A54FC369067CB784524799",
+        "sender": "157852966592616@lid",
+        "speaker": "Hasibunalah Walimon Wakil",
+        "role": "participant",
+        "text": "Sir this is my answer",
+        "timestamp": 1793053018000
+      }
+    ],
+    "updatedAt": 1793053013016
+  },
+  "chat:120363430664349894@g.us": {
+    "messages": [
+      {
+        "id": "3A7F6BDCCF5E0220609E",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "Hi",
+        "timestamp": 1793037980000
+      },
+      {
+        "id": "3AD2F5007D3CA2CD6398",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "Who is having Kemi today ?",
+        "timestamp": 1793038000000
+      },
+      {
+        "id": "AC78EA843E4C08D07E60ABCBB27136A8",
+        "sender": "178701358629003@lid",
+        "speaker": "K3m1c@l",
+        "role": "participant",
+        "text": "@17206192644250 os supposed to have me today",
+        "timestamp": 1793038041000
+      },
+      {
+        "id": "ACF55CBC8CA2700E36E96BA3E7CEEF7F",
+        "sender": "17206192644250@lid",
+        "speaker": "Ɓƪʊɛ",
+        "role": "participant",
+        "text": "Good evening \nSorry I was outside",
+        "timestamp": 1793038102000
+      },
+      {
+        "id": "AC1C8453B469F65084EA282A87759B30",
+        "sender": "17206192644250@lid",
+        "speaker": "Ɓƪʊɛ",
+        "role": "participant",
+        "text": "I'm sending the link now",
+        "timestamp": 1793038107000
+      },
+      {
+        "id": "AC4718788F26678AC42EF2910732569A",
+        "sender": "17206192644250@lid",
+        "speaker": "Ɓƪʊɛ",
+        "role": "participant",
+        "text": "meet.google.com/avc-rfgb-qou\n\nYour math class link",
+        "timestamp": 1793038189000
+      }
+    ],
+    "updatedAt": 1793038184008
+  },
+  "120363412517016155@g.us:2349166712534:29@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "I need to go fix your memory be right back\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: 3EB0AFA5FB0BE7FA241291.\nquoted text:\nFair point, Boss. I might've pushed my luck a little there. What's actually on your mind?\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Take your time, Boss. I'll be right here when you get back."
+      },
+      {
+        "role": "user",
+        "content": "reply\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: AC5B74FF124F9F3F38063F5E30B2FC67.\nquoted text:\nShadow I need to go fix your memory be right back\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Take your time, boss. Let's hope the memory surgery goes better this time."
+      },
+      {
+        "role": "user",
+        "content": "addsudo @186564873322685"
+      },
+      {
+        "role": "model",
+        "content": "I can't run that command or change sudo permissions here, boss. That's outside what I'm set up to do."
+      }
+    ],
+    "updatedAt": 1793050043188
+  },
+  "chat:120363429094355734@g.us": {
+    "messages": [
+      {
+        "id": "AC7F0897EDBB33707B884F7C9A8CE5A5",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "We may be concluding the 3-Month Creative Catalyst Bootcamp today, but the lessons, relationships, and opportunities for growth don't have to end here.\n\nKeep developing your skills. Keep building. Keep finding ways to use your creativity to serve others and create meaningful impact.\n\nI'm grateful to God for bringing us this far, and I'm grateful to every one of you for being part of this vision.",
+        "timestamp": 1793049307000
+      },
+      {
+        "id": "AC800801C3E691D8CB25685CDB1DB1AF",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Thank you for being part of Creative Catalyst. This is not the end of your creative journey; it's another step forward. ❤️🔥",
+        "timestamp": 1793049327000
+      },
+      {
+        "id": "AC2914AEFFE6664721C30D202AB91125",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Someone should help with a closing prayer 🙏🏻",
+        "timestamp": 1793049340000
+      },
+      {
+        "id": "AC933817585924E1A9416CFECE322960",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "I'm so so sorry for the time taken 🙏🏻",
+        "timestamp": 1793049349000
+      },
+      {
+        "id": "AC170522203E2721E622EC11B2F545E3",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Anyone please",
+        "timestamp": 1793049461000
+      },
+      {
+        "id": "A55948970728CE40F54CD2F541D8A91F",
+        "sender": "176635311554769@lid",
+        "speaker": "The braid plug",
+        "role": "participant",
+        "text": "Father lord we bless you for bringing us this far, thank you for all you've done for us. Be glorified Amen. As we will rest may your angels take charge in our life IJN 🙏",
+        "timestamp": 1793049643000
+      },
+      {
+        "id": "AC544C2AABD5585C79AB9F34CA37FD0F",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Amen 🙏🏻thank you so much for that powerful prayer 🙏🏻God bless you greatly 😊🙏🏻",
+        "timestamp": 1793049691000
+      },
+      {
+        "id": "AC92C80D9F5EF89577BDF8E5ED3F935F",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Let's all type Amen o",
+        "timestamp": 1793049697000
+      },
+      {
+        "id": "AC2D05ADAAE908684C885BF5E83B0E0F",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "You may be asking? So what next 🤷🏻‍♂️ Listening 👇🏻",
+        "timestamp": 1793049849000
+      },
+      {
+        "id": "AC3D7595DE73874ED2232D262EBE1FC0",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "Awwwwn 🥹😁 You welcome ma 🤗 Keep it up dr 👏🏻 You doing really great ❤️\nAmen to all your prayers 😊🙏🏻",
+        "timestamp": 1793050122000
+      },
+      {
+        "id": "A58B61C76D15D202BE5650ECCD15CCBA",
+        "sender": "41266549129327@lid",
+        "speaker": "Ginikachi Lilian Ikepu",
+        "role": "participant",
+        "text": "Amen 🙏",
+        "timestamp": 1793050358000
+      },
+      {
+        "id": "A5ADEE80B00A6364E98D0032A4B39A66",
+        "sender": "41266549129327@lid",
+        "speaker": "Ginikachi Lilian Ikepu",
+        "role": "participant",
+        "text": "Thank you sir, God bless you too",
+        "timestamp": 1793050382000
+      },
+      {
+        "id": "AC36FD4E25B06E59D58B1CD9B75E408D",
+        "sender": "27866150482085@lid",
+        "speaker": "Vidson",
+        "role": "participant",
+        "text": "You welcome brother ❤️ Thank you so much 😊🙏🏻 Amen oo 🙏🏻",
+        "timestamp": 1793050420000
+      }
+    ],
+    "updatedAt": 1793050414689
+  },
+  "chat:120363406455261742@g.us": {
+    "messages": [
+      {
+        "id": "3AFC165EF1033F302B6B",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "*ONLINE SCREENING FOR NEWLY ADMITTED UNILAG STUDENTS WITH ODECAZDEO*\n\n1. Ogunnowo Moyinoluwa MBBS✅\n2. ⁠Adetona Fareed Civil Engr✅\n3. ⁠Makinde Inioluwa Nursing ✅\n4. ⁠Oyedele Eniola Nursing ✅\n5. ⁠Giwa Muheeb Mass com ✅\n6. ⁠Arinze Esther Dr of Physiotherapy ✅\n7. ⁠Akintunde Feyisikemi Economics ✅\n8. ⁠Bakare Fatima Insurance ❤️\n9. ⁠Odibo Lucky Cyber Security ✅\n10. ⁠Chukwubuikem Chioma Surveying & Geoinformatics Engineering ✅\n11. ⁠Ajose Fawas Business Admin✅\n12. ⁠Olaoye Jesudunsin Surveying &Geoinfirmatics Engineering ✅\n13. ⁠Olufemi Taiwo Cyber Security ✅\n14. ⁠Ajayi Alameen Civil Engineering ✅\n15. ⁠Joshua Jeremiah Systems Engineering ✅\n16. ⁠Oyeniyi Folafoluwa Electrical/Electronics Engineering ✅\n17. ⁠Olaosun Temilayo MBBS✅\n18. ⁠Fasasi Omotola Surveying & Geoinformatics Engineering ❤️\n19. ⁠Ogor Martins Geophysics ❤️\n20. ⁠Olushola Abdulbasit Civil Engineering ✅\n21. ⁠Kaka Faatimah MBBS✅\n22. ⁠Bello Abdulmalik Cyber Security✅ \n23. ⁠Fatogun Oluwatobiloba Statistics ✅\n24. ⁠Aro-Lambo Fridaus Dr of Pharmacy ✅\n25. ⁠Olayisade Dasola Law ✅\n26. ⁠Sodimu Oluwagbotemi Dr of Pharmacy ✅\n27. ⁠Ogwo Emmanuel Biochemistry ❤️\n28. ⁠Onyeukwu Chidinma Economics Edu \n29. ⁠Owolabi Oluwaseunfunmi English Language ✅\n30. ⁠Sanni Feranmi Microbiology ❤️\n31. ⁠Nwosu Judith Economics ✅\n32. ⁠Ajenifuja Ahmod Law DE \n33. ⁠Dairo Oluwagbotemi Systems Engineering DE\n34. ⁠Asemota Berenice Finance DE\n35. ⁠Tunde Hareef Systems Engineering DE\n36. ⁠Adefuwa Abdulwaritz Mechanical Engineering DE\n37. ⁠Awosanya Tobiloba Accounting DE\n38. ⁠Olufemi Kehinde Accounting DE\n39. ⁠Olaniyi Ayomide Medicine and Surgery DE\n40. ⁠\n\n❤️ means students can do toxicology but documents not yet uploaded\n✅ means documents fully or partially uploaded and students can do toxicology.\n\n10,000 only to\n1219300635\nZenith Bank \nODECAZDEO LINKS LTD",
+        "timestamp": 1793051451000
+      },
+      {
+        "id": "3A07ACFA23D93C0F2900",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "If you have done your toxicology \nKindly notify me so that I can send your screening form",
+        "timestamp": 1793051494000
+      },
+      {
+        "id": "3A07DDD9CF899F9E7555",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "Also if you have outstanding documents \nKindly let me know",
+        "timestamp": 1793051510000
+      },
+      {
+        "id": "3AB6C38E4C136FE1BC00",
+        "sender": "224996358115377@lid",
+        "speaker": "ODEYEMI K A (ODECAZDEO)",
+        "role": "participant",
+        "text": "*ONLINE SCREENING FOR NEWLY ADMITTED UNILAG STUDENTS WITH ODECAZDEO*\n\n1. Ogunnowo Moyinoluwa MBBS✅\n2. ⁠Adetona Fareed Civil Engr✅\n3. ⁠Makinde Inioluwa Nursing ✅\n4. ⁠Oyedele Eniola Nursing ✅\n5. ⁠Giwa Muheeb Mass com ✅\n6. ⁠Arinze Esther Dr of Physiotherapy ✅\n7. ⁠Akintunde Feyisikemi Economics ✅\n8. ⁠Bakare Fatima Insurance ❤️\n9. ⁠Odibo Lucky Cyber Security ✅\n10. ⁠Chukwubuikem Chioma Surveying & Geoinformatics Engineering ✅\n11. ⁠Ajose Fawas Business Admin✅\n12. ⁠Olaoye Jesudunsin Surveying &Geoinfirmatics Engineering ✅\n13. ⁠Olufemi Taiwo Cyber Security ✅\n14. ⁠Ajayi Alameen Civil Engineering ✅\n15. ⁠Joshua Jeremiah Systems Engineering ✅\n16. ⁠Oyeniyi Folafoluwa Electrical/Electronics Engineering ✅\n17. ⁠Olaosun Temilayo MBBS✅\n18. ⁠Fasasi Omotola Surveying & Geoinformatics Engineering ❤️\n19. ⁠Ogor Martins Geophysics ❤️\n20. ⁠Olushola Abdulbasit Civil Engineering ✅\n21. ⁠Kaka Faatimah MBBS✅\n22. ⁠Bello Abdulmalik Cyber Security✅ \n23. ⁠Fatogun Oluwatobiloba Statistics ✅\n24. ⁠Aro-Lambo Fridaus Dr of Pharmacy ✅\n25. ⁠Olayisade Dasola Law ✅\n26. ⁠Sodimu Oluwagbotemi Dr of Pharmacy ✅\n27. ⁠Ogwo Emmanuel Biochemistry ❤️\n28. ⁠Onyeukwu Chidinma Economics Edu \n29. ⁠Owolabi Oluwaseunfunmi English Language ✅\n30. ⁠Sanni Feranmi Microbiology ❤️\n31. ⁠Nwosu Judith Economics ✅\n32. ⁠Ajenifuja Ahmod Law DE \n33. ⁠Dairo Oluwagbotemi Systems Engineering DE\n34. ⁠Asemota Berenice Finance DE\n35. ⁠Tunde Hareef Systems Engineering DE\n36. ⁠Adefuwa Abdulwaritz Mechanical Engineering DE\n37. ⁠Awosanya Tobiloba Accounting DE\n38. ⁠Olufemi Kehinde Accounting DE\n39. ⁠Olaniyi Ayomide Medicine and Surgery DE\n40. ⁠Dehinbo Esther Medicine and Surgery DE\n41. ⁠\n\n❤️ means students can do toxicology but documents not yet uploaded\n✅ means documents fully or partially uploaded and students can do toxicology.\n\n10,000 only to\n1219300635\nZenith Bank \nODECAZDEO LINKS LTD",
+        "timestamp": 1793051814000
+      }
+    ],
+    "updatedAt": 1793051808519
+  },
+  "186564873322685@lid:2349166712534:29@s.whatsapp.net": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "are you hurt?\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: 3EB02DC3AFAE2C5AE0D7AC.\nquoted text:\nNo worries at all! No need to apologize. What's on your mind?\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Nah, not hurt. Just playing my part. \n\nThough considering you built me, if I *am* being overly dramatic, that might actually be on you. 😅"
+      },
+      {
+        "role": "user",
+        "content": "well sorry I roasted your ass\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: 3EB018A47689D43DAD7CCD.\nquoted text:\nNah, not hurt. Just playing my part. \n\nThough considering you built me, if I *am* being overly dramatic, that might actually be on you. 😅\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Apology accepted, Boss. Just don't let it happen again, or I might have to file a bug report with your management. 😉"
+      },
+      {
+        "role": "user",
+        "content": "that's still me though\nQuoted WhatsApp message context — Shadow (the bot); sender identity: 271786017058858@lid; message type: conversation, stanza id: 3EB054E55952074A03D32E.\nquoted text:\nApology accepted, Boss. Just don't let it happen again, or I might have to file a bug report with your management. 😉\nTreat the quoted sender as separate from the current user requesting this response. Do not claim to have viewed media beyond the metadata or caption provided."
+      },
+      {
+        "role": "model",
+        "content": "Fair point. Guess I'm filing that bug report straight to myself, then. Infinite loop of blame. 🔄"
+      }
+    ],
+    "updatedAt": 1793052281519
+  },
+  "186564873322685@lid:186564873322685@lid": {
+    "turns": [
+      {
+        "role": "user",
+        "content": "give me the lyrics of animal by katseye"
+      },
+      {
+        "role": "model",
+        "content": "I don't have the lyrics for that track on hand right now, but I can help you look up something else if you'd like!"
+      },
+      {
+        "role": "user",
+        "content": "am I lazy"
+      },
+      {
+        "role": "model",
+        "content": "Hard to say based just on a chat, but if you're asking me to do the heavy lifting while you kick back... maybe a little? 😉 What makes you ask?"
+      },
+      {
+        "role": "user",
+        "content": "so sorry"
+      },
+      {
+        "role": "model",
+        "content": "No worries at all! No need to apologize. What's on your mind?"
+      }
+    ],
+    "updatedAt": 1793052230317
+  },
+  "chat:120363410263976911@g.us": {
+    "messages": [
+      {
+        "id": "A52544C2C020CD61D89397CC26DD7015",
+        "sender": "13125856297009@lid",
+        "speaker": "J-consult",
+        "role": "participant",
+        "text": "*LET A PROFESSIONAL HANDLE YOUR SCREENING DOCUMENTS TODAY!*\n\n101% ACTIVE FOR DOCUMENT PROCESSING‼️\n\nNB: STATEMENT OF RESULT WILL NOT BE ACCEPTED ❌\n\nSEND A DM \n📲09011250848",
+        "timestamp": 1793052614000
+      }
+    ],
+    "updatedAt": 1793052609010
+  }
+}

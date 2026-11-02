@@ -168,13 +168,15 @@ test('message handler records ordinary group turns and supplies them to the next
   })
   await handler({ type: 'notify', messages: [
     groupMessage('temi-1', 'temi@s.whatsapp.net', 'Temi', 'Welcome, Gafar. Good to have you here.'),
-    groupMessage('gafar-1', 'gafar@s.whatsapp.net', 'Gafar', "Shadow, what's up with him?", { stanzaId: 'quoted-miyamaru', participant: 'miyamaru@s.whatsapp.net', quotedMessage: { conversation: 'I keep arguing with my reflection.' } })
+    groupMessage('gafar-1', 'gafar@s.whatsapp.net', 'Gafar', "Shadow, what's up with him?", { stanzaId: 'quoted-miyamaru', participant: 'miyamaru@s.whatsapp.net', mentionedJid: ['miyamaru@s.whatsapp.net'], quotedMessage: { conversation: 'I keep arguing with my reflection.' } })
   ] })
   assert.equal(transcript.length, 2)
   assert.deepEqual(calls[0].recentMessages.map(item => [item.speaker, item.sender, item.text]), [['Temi', 'temi@s.whatsapp.net', 'Welcome, Gafar. Good to have you here.']])
   assert.equal(calls[0].speaker, 'Gafar')
   assert.equal(calls[0].quoted.sender, 'miyamaru@s.whatsapp.net')
   assert.equal(calls[0].quoted.text, 'I keep arguing with my reflection.')
+  assert.equal(transcript[1].quoted.text, 'I keep arguing with my reflection.')
+  assert.deepEqual(transcript[1].mentions, ['miyamaru@s.whatsapp.net'])
 })
 test('sudo service persists and revokes normalized participant identities', async () => {
   const { createSudoService } = await import('../src/services/sudo.js')
@@ -841,7 +843,7 @@ test('caches and recovers a deleted text message', async () => {
   const cache = createMessageCache({ ttlMs: 60_000 }); const original = { key: { id: 'deleted-1', remoteJid: '123-456@g.us', participant: 'user@s.whatsapp.net' }, pushName: 'Justin', message: { conversation: 'secret text' } }
   cache.remember(original); assert.equal(cache.take(original.key), original)
   const sent = []; const result = await recoverDeletedMessage({ sock: { sendMessage: async (...args) => sent.push(args) }, original, destination: '123-456@g.us' })
-  assert.equal(result.restored, true); assert.match(sent[0][1].text, /Deleted message detected/); assert.match(sent[1][1].text, /Justin : secret text/); assert.match(sent[1][1].text, /Shadow sees all/); assert.match(sent[1][1].text, /\*\*Recovered message:\*\* secret text/)
+  assert.equal(result.restored, true); assert.match(sent[0][1].text, /Deleted message detected/); assert.match(sent[1][1].text, /Recovered deleted message from Justin : secret text/); assert.doesNotMatch(sent[1][1].text, /Shadow sees all/)
 })
 test('anti-delete toggle persists and deleted events recover cached messages only when enabled', async () => {
   const registered = {}; const sent = []; const metrics = { moderationActions: 0 }; let policy = { antiDelete: false }
@@ -851,7 +853,22 @@ test('anti-delete toggle persists and deleted events recover cached messages onl
   attachHandlers({ sock, commands, settings, config: { prefix: '.', ownerNumber: '2349166712534', antiDeleteLogJid: '' }, seen: new Set(), metrics })
   const source = { key: { id: 'deleted-2', remoteJid: '123-456@g.us', participant: 'user@s.whatsapp.net' }, message: { conversation: 'recover this' } }
   await registered['messages.upsert']({ type: 'notify', messages: [source] }); await registered['messages.delete']({ keys: [source.key] }); assert.equal(sent.length, 0)
-  policy.antiDelete = true; await registered['messages.upsert']({ type: 'notify', messages: [{ ...source, key: { ...source.key, id: 'deleted-3' } }] }); await registered['messages.delete']({ keys: [{ ...source.key, id: 'deleted-3' }] }); assert.equal(sent.length, 2); assert.equal(metrics.moderationActions, 1)
+  policy.antiDelete = true; await registered['messages.upsert']({ type: 'notify', messages: [{ ...source, key: { ...source.key, id: 'deleted-3' } }] }); await registered['messages.delete']({ keys: [{ ...source.key, id: 'deleted-3' }] }); assert.equal(sent.length, 2); assert.equal(sent[0][0], '2349166712534@s.whatsapp.net'); assert.equal(sent[1][0], '2349166712534@s.whatsapp.net'); assert.equal(metrics.moderationActions, 1)
+  await registered['messages.update']([{ key: { ...source.key, id: 'deleted-3' }, update: { message: null, messageStubType: 1 } }]); assert.equal(sent.length, 2)
+})
+
+test('anti-delete sends private-chat recovery to that private chat', async () => {
+  const registered = {}; const sent = []; const metrics = { moderationActions: 0 }; const policy = { antiDelete: true }
+  const jid = 'user@s.whatsapp.net'
+  const sock = { user: { id: 'bot@s.whatsapp.net' }, ev: { on: (event, handler) => { registered[event] = handler } }, sendMessage: async (...args) => sent.push(args) }
+  const settings = { get: () => policy }
+  attachHandlers({ sock, commands: { lookup: () => undefined, sudo: { has: () => false } }, settings, config: { prefix: '.', ownerNumber: '2349166712534', antiDeleteLogJid: '' }, seen: new Set(), metrics })
+  const original = { key: { id: 'private-delete-1', remoteJid: jid, participant: jid }, message: { conversation: 'private recovery' } }
+  await registered['messages.upsert']({ type: 'notify', messages: [original] })
+  await registered['messages.delete']({ keys: [original.key] })
+  assert.equal(sent.length, 2)
+  assert.equal(sent[0][0], jid); assert.equal(sent[1][0], jid)
+  assert.match(sent[1][1].text, /private recovery/)
 })
 test('handles Baileys rc14 revoke updates emitted through messages.update', async () => {
   const registered = {}; const sent = []; const metrics = { moderationActions: 0 }; const policy = { antiDelete: true }

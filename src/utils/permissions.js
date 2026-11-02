@@ -12,11 +12,19 @@ export function authenticatedAccountIsOwner(sock, config) {
   const identities = [sock?.user?.id, sock?.user?.phoneNumber].filter(Boolean)
   return identities.some(identity => isOwner(identity, config))
 }
+// Every identity WhatsApp gives for who sent a message. Group chats and DMs can present the same person as a phone-number JID or as a LID,
+// and the saved owner/sudo entry may be in the other form, so access checks must consider all of them (never the group's own JID).
+export function messageIdentities(message, sock) {
+  const key = message?.key || {}
+  const ids = key.fromMe ? [messageSender(message, sock)] : [key.participant, key.participantAlt, key.participantPn, key.remoteJid, key.remoteJidAlt]
+  return [...new Set(ids.filter(id => typeof id === 'string' && id && id !== 'status@broadcast' && !isGroupJid(id)))]
+}
+export function senderIsSudo(sudo, message, sock) { return messageIdentities(message, sock).some(identity => Boolean(sudo?.has?.(identity))) }
 export function isOwnerMessage(message, sock, config) {
   // Baileys v7 may expose the linked account as a LID while OWNER_NUMBER is a PN.
   // `fromMe` is emitted by the authenticated socket and is therefore the reliable
   // owner signal for commands sent from the linked WhatsApp account.
-  return isOwner(messageSender(message, sock), config) || Boolean(message?.key?.fromMe) || (message?.key?.fromMe && authenticatedAccountIsOwner(sock, config))
+  return isOwner(messageSender(message, sock), config) || Boolean(message?.key?.fromMe) || (message?.key?.fromMe && authenticatedAccountIsOwner(sock, config)) || messageIdentities(message, sock).some(identity => isOwner(identity, config))
 }
 export function isAdmin(metadata, jid) { const p = metadata?.participants?.find(x => participantIds(x).some(candidate => sameJid(candidate, jid))); return Boolean(p?.admin === 'admin' || p?.admin === 'superadmin') }
 export function botIdentityJids(sock) { return [sock?.user?.id, sock?.user?.lid, sock?.user?.phoneNumber].filter(Boolean) }

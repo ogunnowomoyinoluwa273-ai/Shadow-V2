@@ -48,5 +48,17 @@
     "slowmodeSeconds": 0,
     "disabledCommands": [],
     "character": "sarcastic"
+  },
+  "120363413184059418@g.us": {
+    "antiLink": false,
+    "antiLinkAllUrls": false,
+    "antiDelete": false,
+    "welcome": false,
+    "goodbye": false,
+    "rules": "Be respectful. Follow the group topic and WhatsApp rules.",
+    "support": "",
+    "mutedParticipants": [],
+    "slowmodeSeconds": 0,
+    "disabledCommands": []
   }
 }

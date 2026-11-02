@@ -4,6 +4,7 @@ import { createJsonStore } from './services/jsonStore.js'
 import { createGroupSettings } from './services/groupSettings.js'
 import { createSudoService } from './services/sudo.js'
 import { createMemoryService } from './services/memory.js'
+import { backupOnce, migrateHistoryKeys, migrateMemoryKeys } from './services/dataMigration.js'
 import { buildCommands } from './commands/registry.js'
 import { startConnection } from './connection/connect.js'
 import { attachHandlers } from './handlers/eventHandler.js'
@@ -12,6 +13,7 @@ import { createReactionService } from './services/reactions.js'
 import { createGeminiBrain } from './services/aiBrain.js'
 import { createImageGenerationService } from './services/imageGeneration.js'
 import { createPersistentContextStore } from './services/conversationHistory.js'
+import { createClockCalendarService } from './services/clockCalendar.js'
 import { logger } from './utils/logger.js'
 import { errorLogDetails } from './utils/errors.js'
 import { createFatalProcessErrorHandler } from './utils/processSafety.js'
@@ -22,13 +24,19 @@ const warningStore = await createJsonStore(config.warningsFile)
 const sudoStore = await createJsonStore(config.sudoFile, [])
 const memoryStore = await createJsonStore(config.memoryFile, {})
 const historyStore = await createJsonStore(config.historyFile, {})
+const calendarStore = await createJsonStore(config.calendarFile, [])
+// One-time, lossless clean-up: key saved memory and conversations by person (not by linked-device number) so a re-link no longer orphans them.
+await backupOnce(config.memoryFile).catch(() => false); await backupOnce(config.historyFile).catch(() => false)
+const keyMigration = { memory: await migrateMemoryKeys(memoryStore).catch(error => ({ changed: false, error })), history: await migrateHistoryKeys(historyStore, { maxTurns: config.historyMaxTurns }).catch(error => ({ changed: false, error })) }
+if (keyMigration.memory.changed || keyMigration.history.changed) logger.info({ memoryKeysMerged: keyMigration.memory.moved || 0, historyKeysMerged: keyMigration.history.merged || 0 }, 'Saved memory and conversations now follow the person, not the linked-device number')
 const settings = createGroupSettings(settingsStore, config)
 const sudo = createSudoService(sudoStore)
 const memory = createMemoryService(memoryStore)
 const metrics = { messagesSeen: 0, commandsExecuted: 0, deniedCommands: 0, moderationActions: 0, errors: 0 }
-const persistentContext = createPersistentContextStore(historyStore, { maxTurns: config.historyMaxTurns })
-const reload = async () => { await settingsStore.reload(); await warningStore.reload(); await sudoStore.reload(); await memoryStore.reload(); await historyStore.reload() }
-const startedAt = Date.now(); const downloader = createDownloader({ config }); const reactions = createReactionService(); const imageGenerator = createImageGenerationService({ model: config.imageModel, timeoutMs: config.imageTimeoutMs }); const commands = buildCommands({ settings, warnings: warningStore, sudo, startedAt, metrics, reload, downloader, reactions }); const aiBrain = createGeminiBrain({ config, sudo, memory, imageGenerator, historyStore: persistentContext, commands, settings }); const seen = new Set()
+const persistentContext = createPersistentContextStore(historyStore, { maxTurns: config.historyMaxTurns, ttlMs: config.historyTtlMs, chatTtlMs: config.chatContextTtlMs, maxChatMessages: config.chatContextMaxMessages, maxChats: config.chatContextMaxChats, summaryTtlMs: config.chatContextSummaryTtlMs })
+const calendar = createClockCalendarService({ store: calendarStore, timeZone: config.timeZone })
+const reload = async () => { await persistentContext.flush(); await settingsStore.reload(); await warningStore.reload(); await sudoStore.reload(); await memoryStore.reload(); await historyStore.reload(); await calendarStore.reload(); persistentContext.invalidateCache() }
+const startedAt = Date.now(); const downloader = createDownloader({ config }); const reactions = createReactionService(); const imageGenerator = createImageGenerationService({ model: config.imageModel, timeoutMs: config.imageTimeoutMs }); const commands = buildCommands({ settings, warnings: warningStore, sudo, startedAt, metrics, reload, downloader, reactions, calendar }); const aiBrain = createGeminiBrain({ config, sudo, memory, imageGenerator, historyStore: persistentContext, commands, settings, calendar }); const seen = new Set()
 let currentSocket; let shuttingDown = false; let reconnecting = false; let connectionGeneration = 0; let reconnectTimer
 async function connect() {
   const generation = ++connectionGeneration
@@ -45,7 +53,7 @@ async function connect() {
     }
   })
 }
-async function shutdown(signal) { if (shuttingDown) return; shuttingDown = true; clearTimeout(reconnectTimer); logger.info({ signal }, 'Shutting down'); try { await aiBrain.flush() } catch (error) { logger.error({ err: errorLogDetails(error) }, 'Could not flush conversation history before shutdown') }; try { currentSocket?.end?.(new Error('Process shutdown')) } catch {}; process.exit(0) }
+async function shutdown(signal) { if (shuttingDown) return; shuttingDown = true; clearTimeout(reconnectTimer); logger.info({ signal }, 'Shutting down'); try { await aiBrain.flush(); await calendar.flush() } catch (error) { logger.error({ err: errorLogDetails(error) }, 'Could not flush persistent data before shutdown') }; try { currentSocket?.end?.(new Error('Process shutdown')) } catch {}; process.exit(0) }
 const handleFatalProcessError = createFatalProcessErrorHandler({ logger, getSocket: () => currentSocket, markShuttingDown: () => { shuttingDown = true; reconnecting = false } })
 process.once('SIGINT', () => shutdown('SIGINT')); process.once('SIGTERM', () => shutdown('SIGTERM'))
 process.on('unhandledRejection', reason => handleFatalProcessError('Unhandled promise rejection', reason))

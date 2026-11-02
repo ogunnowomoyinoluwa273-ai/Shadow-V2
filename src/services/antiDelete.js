@@ -40,7 +40,7 @@ export async function recoverDeletedMessage({ sock, original, destination, logDe
 
   const content = unwrapMessage(original)
   const type = getContentType(content)
-  let restored = text ? { text: `${original.pushName || `@${sender.split('@')[0]}`} : ${text}\n\nShadow: ♠️ Shadow sees all. You may erase the evidence, but you can't erase the shadows...\n\n**Recovered message:** ${text}` } : null
+  let restored = text ? { text: `Recovered deleted message from ${original.pushName || `@${sender.split('@')[0]}`} : ${text}`, ...options } : null
   if (!restored && mediaTypes.has(type)) {
     try {
       const buffer = await downloadMediaMessage(original, 'buffer', {}, { logger: sock.logger, reuploadRequest: sock.updateMediaMessage })

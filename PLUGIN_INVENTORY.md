@@ -631,20 +631,20 @@ Shared implementation is `src/services/downloader.js`, created once in `src/inde
 - **Replacement options:** Must replace command and handler timing branch for changed behavior; durable timing requires separate persistence/expiry policy; shared store migration impacts group settings.
 - **Evidence:** `src/commands/registry.js`; `src/handlers/messageHandler.js`; `src/services/groupSettings.js`; `src/services/jsonStore.js`; `src/utils/permissions.js`; `src/index.js`; `src/connection/connect.js`.
 
-### `.delete` — aliases `[]`; group-only/admin
+### `.delete` — aliases `[]`; groups (admin) and private chats (owner/sudo)
 - **Modules:** `src/commands/registry.js`; `src/utils/message.js`; `src/utils/permissions.js`; `src/utils/jid.js`; `src/handlers/messageHandler.js`; `src/connection/connect.js`.
 - **Dependencies/providers:** Baileys group metadata and `sendMessage({delete: quoted.key})`; no external provider.
 - **Functionality:** Requires quoted message, submits deletion of its reconstructed key, then replies “Message deleted.”
-- **Limitations/access:** Group admin/owner and quote required. No bot-admin precheck, age/authorship/eligibility validation. Success response only means awaited call resolved; actual delete unverified.
+- **Limitations/access:** In groups: group admin/owner and quote required. In a private chat: owner/sudo and quote required (WhatsApp itself only lets the account delete its own messages there). No bot-admin precheck, age/authorship/eligibility validation. Success response only means awaited call resolved; actual delete unverified.
 - **Connections:** Same payload family as `.clear` and automatic moderation, but not same bot-admin precheck/metrics helper.
 - **Replacement options:** Replace callback or deletion transport while preserving quote parsing, authorization and single-message behavior; automatic moderation is a separate callsite.
 - **Evidence:** `src/commands/registry.js`; `src/utils/message.js`; `src/utils/permissions.js`; `src/handlers/messageHandler.js`; `src/connection/connect.js`.
 
-### `.clear` — aliases `[]`; group-only/admin
+### `.clear` — aliases `[]`; groups (admin) and private chats (owner/sudo)
 - **Modules:** `src/commands/registry.js`; `src/utils/message.js`; `src/utils/permissions.js`; `src/utils/jid.js`; `src/handlers/messageHandler.js`; `src/index.js`; `src/connection/connect.js`.
 - **Dependencies/providers:** Baileys group metadata and quoted-key delete send; no external provider.
 - **Functionality:** Deletes exactly one replied-to message and confirms; bulk deletion explicitly disabled.
-- **Limitations/access:** Group admin/owner and quote required. No bot-admin precheck, age/ownership validation or bulk path. Live WhatsApp deletion eligibility unknown.
+- **Limitations/access:** In groups: group admin/owner and quote required. In a private chat: owner/sudo and quote required (WhatsApp itself only lets the account delete its own messages there). No bot-admin precheck, age/ownership validation or bulk path. Live WhatsApp deletion eligibility unknown.
 - **Connections:** Shares Baileys delete payload and quote utility with `.delete`, but separate handler call from automatic moderation.
 - **Replacement options:** Preserve the one-message safety boundary and authorization; provider migration needs delete API. Bulk deletion would be deliberate behavior change.
 - **Evidence:** `src/commands/registry.js`; `src/utils/message.js`; `src/utils/permissions.js`; `src/handlers/messageHandler.js`; `src/connection/connect.js`.

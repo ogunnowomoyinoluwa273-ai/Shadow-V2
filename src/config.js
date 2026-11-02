@@ -1,6 +1,7 @@
 import 'dotenv/config'
 import path from 'node:path'
 import { fileURLToPath } from 'node:url'
+import { reactionFromEnv } from './services/botMark.js'
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..')
 const bool = (v, fallback = false) => v == null ? fallback : ['1', 'true', 'yes', 'on'].includes(String(v).toLowerCase())
@@ -24,7 +25,19 @@ export const config = Object.freeze({
   sudoFile: path.resolve(root, process.env.SUDO_FILE || './data/sudo.json'),
   memoryFile: path.resolve(root, process.env.MEMORY_FILE || './data/memories.json'),
   historyFile: path.resolve(root, process.env.HISTORY_FILE || './data/conversation-history.json'),
-  historyMaxTurns: Math.max(2, Math.min(number(process.env.HISTORY_MAX_TURNS, 6), 20)),
+  calendarFile: path.resolve(root, process.env.CALENDAR_FILE || './data/calendar.json'),
+  timeZone: process.env.TIMEZONE?.trim() || Intl.DateTimeFormat().resolvedOptions().timeZone || 'UTC',
+  botMessageReaction: reactionFromEnv(process.env.BOT_MESSAGE_REACTION),
+  naturalCommands: String(process.env.NATURAL_COMMANDS || 'on').trim().toLowerCase() !== 'off',
+  lrclibClientContact: process.env.LRCLIB_CLIENT_CONTACT?.trim() || 'https://github.com/ogunnowomoyinoluwa273-ai/Shadow-V2',
+  maxMessageAgeSeconds: Math.max(0, Math.min(number(process.env.MAX_MESSAGE_AGE_SECONDS, 300), 86_400)),
+  historyMaxTurns: Math.max(2, Math.min(number(process.env.HISTORY_MAX_TURNS, 24), 60)),
+  historyPromptTurns: Math.max(2, Math.min(number(process.env.HISTORY_PROMPT_TURNS, 12), 40)),
+  historyTtlMs: Math.max(3_600_000, Math.min(number(process.env.HISTORY_TTL_HOURS, 336) * 3_600_000, 90 * 86_400_000)),
+  chatContextTtlMs: Math.max(600_000, Math.min(number(process.env.CHAT_CONTEXT_TTL_MINUTES, 180) * 60_000, 7 * 86_400_000)),
+  chatContextMaxMessages: Math.max(16, Math.min(number(process.env.CHAT_CONTEXT_MAX_MESSAGES, 80), 200)),
+  chatContextMaxChats: Math.max(20, Math.min(number(process.env.CHAT_CONTEXT_MAX_CHATS, 500), 2_000)),
+  chatContextSummaryTtlMs: Math.max(86_400_000, Math.min(number(process.env.CHAT_CONTEXT_SUMMARY_DAYS, 14) * 86_400_000, 90 * 86_400_000)),
   maxTagall: Math.max(1, Math.min(number(process.env.MAX_TAGALL, 100), 1024)),
   antiLinkDefault: bool(process.env.ANTILINK_DEFAULT, false),
   antiDeleteLogJid: process.env.ANTIDELETE_LOG_JID?.trim() || '',

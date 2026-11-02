@@ -37,6 +37,7 @@ test('group transcript persists speaker identities in order, deduplicates messag
     await first.addChatMessage('group-a@g.us', { id: 'shadow-1', sender: 'shadow', speaker: 'Shadow', role: 'shadow', text: 'The reflection had a point.' })
     await first.addChatMessage('group-a@g.us', { id: 'shadow-1', sender: 'shadow', speaker: 'Shadow', role: 'shadow', text: 'Duplicate event.' })
     await first.addChatMessage('group-b@g.us', { id: 'other-1', sender: 'temi@s.whatsapp.net', speaker: 'Temi', text: 'Separate group.' })
+    await first.flush()
 
     const restarted = createPersistentContextStore(await createJsonStore(file, {}), { maxChatMessages: 4 })
     const messages = restarted.getChatMessages('group-a@g.us')
@@ -57,6 +58,7 @@ test('concurrent group transcript and participant history updates do not overwri
       history.addChatMessage('busy-group@g.us', { id: `message-${index}`, sender: `user-${index}@s.whatsapp.net`, speaker: `User ${index}`, text: `group message ${index}` }),
       history.add(`private-chat:user-${index}`, 'user', `private turn ${index}`)
     ])))
+    await history.flush()
     const restarted = createPersistentContextStore(await createJsonStore(file, {}), { maxChatMessages: 16 })
     assert.equal(restarted.getChatMessages('busy-group@g.us').length, 8)
     for (let index = 0; index < 8; index += 1) assert.equal(restarted.get(`private-chat:user-${index}`)[0].content, `private turn ${index}`)
@@ -72,11 +74,13 @@ test('recreated brain supplies saved history once to the next request', async ()
     const brainA = createGeminiBrain({ client: clientA, config, historyStore: contextA, sudo: { has: () => true } })
     const message = { key: { remoteJid: 'chat@s.whatsapp.net', id: 'history-1' } }; const sock = { sendMessage: async () => {} }
     await brainA.run({ text: 'Shadow, my name is Ada', message, sock, sender: 'user@s.whatsapp.net' })
+    await brainA.flush()
     const requests = []; const contextB = createPersistentContextStore(await createJsonStore(file, {}))
     const brainB = createGeminiBrain({ client: { interactions: { create: async request => { requests.push(request); return { output_text: 'Welcome back, Ada', steps: [] } } } }, config, historyStore: contextB, sudo: { has: () => true } })
     await brainB.run({ text: 'Shadow, do you remember my name?', message: { key: { remoteJid: 'chat@s.whatsapp.net', id: 'history-2' } }, sock, sender: 'user@s.whatsapp.net' })
     assert.equal(requests.length, 1)
     assert.equal((requests[0].input.match(/my name is Ada/gi) || []).length, 1)
     assert.match(requests[0].input, /do you remember my name/i)
+    await brainB.flush()
   } finally { await fs.rm(dir, { recursive: true, force: true }) }
 })
