@@ -1,50 +1,21 @@
-SHADOW - ALL FIXES IN ONE ZIP (supersedes shadow-speedup, shadow-memory-fix and shadow-dm-fix)
+SHADOW LYRICS FIX  (built on Shadow-V2-main.zip)
 
-INSTALL: stop Shadow, copy these files over your project (same folders), keep your own .env
-(only .env.example is included; no session or data files). Then npm start.
-The separate shadow-deploy-kit.zip (hosting files) is unaffected - add it on top if you use it.
+INSTALL: stop Shadow, copy these 5 files over your project (same folders), keep your own .env, npm start.
+Then check it live from your PC:   .lyrics Contigo - BoyWithUke     and     Shadow, what does Contigo say?
 
-PHASE: NATURAL-LANGUAGE COMMANDS ("Shadow, tag everyone in this group" runs .tagall)
-  - New src/services/nlCommands.js decides WHICH registered command a request means and with which arguments; it never runs
-    anything itself. The message handler turns the decision into the equivalent dot-command and sends it through the same
-    dispatcher as typed commands, so owner / sudo / admin / bot-admin / group-only / disabled-command checks are unchanged.
-  - All 84 commands in .menu have natural phrasing; commands added later are reachable by name/alias automatically (and are
-    treated as sensitive if group-only or owner-only).
-  - Sensitive actions (kick, promote, demote, mute, tagall, group settings, delete, broadcast ...) are not run on the first
-    request: Shadow asks you to reply "Shadow, yes" within 2 minutes (or "Shadow, cancel"). Only the requester can confirm,
-    and the action runs with the original message so tags and replies still apply. Typed dot-commands never ask.
-  - Missing information (who? which city? on or off?) is asked for; unclear or conversational requests still go to the AI.
-  - Turn off with NATURAL_COMMANDS=off in .env. Dot-commands and .menu are untouched.
+WHY IT "DIDN'T WORK"
+ 1. By design, .lyrics never returns lyric text. It finds the song on LRCLIB and replies with the song/artist and a Genius
+    search link; the code throws away the lyric text LRCLIB sends back. If you expected the words in WhatsApp, that is why.
+    (Unchanged on purpose: LRCLIB's text is community-submitted, not licensed for redistribution. Licensed full text needs
+    a paid provider key, e.g. Musixmatch.)
+ 2. "Shadow, give me the lyrics to X by Y" sent the whole sentence, including "by", to LRCLIB as one keyword string.
+    Now title and artist are sent as separate fields (track_name / artist_name, which LRCLIB documents), with keyword
+    fallbacks (max 3 calls), and titles containing "by" ("Stand By Me") still work.
+ 3. "Shadow, what does X say?" was not recognised, so it fell through to the AI. Now it routes to .lyrics (not for he/she/it/
+    that/the message, and not when you reply to a message).
+ 4. The AI had no rule against writing lyrics from memory. It now has one and points to .lyrics instead.
+ 5. An exact title-and-artist match now wins over covers/remixes/other artists; Shadow only asks "which one?" when the
+    artist is missing or really ambiguous.
 
-NEWEST - slow "loading" after a restart (offline backlog)
-  - Cause: after being offline, WhatsApp sends everything missed (about a day of group chatter). Shadow processed
-    each old message like a new one: it rewrote its history file once per message (some writes took over a second)
-    and could even act on old commands / "Shadow ..." messages.
-  - Fix: messages older than MAX_MESSAGE_AGE_SECONDS (default 300 = 5 minutes) are treated as history: no commands,
-    no AI, no moderation. If they are newer than the chat-context window (3 hours) they are still kept as context;
-    older ones are skipped without touching the disk. One log line summarises what was skipped.
-  - MAX_MESSAGE_AGE_SECONDS=0 turns the guard off. If your PC clock is more than ~5 minutes AHEAD of real time,
-    Shadow would skip live messages as "old": keep Windows time sync on, or raise/disable the setting.
-
-NEWEST - recognition mark on Shadow's messages
-  - Shadow runs on your own WhatsApp account, so his replies looked exactly like your messages. Every message he
-    sends (replies, commands, stickers, media) now gets a spade reaction from the same account. Your own typed
-    messages never get it. The reaction is sent in the background, so replies are not slowed down.
-  - Change or turn off with BOT_MESSAGE_REACTION in .env (empty = off, or any other emoji). Default is the spade.
-  - The short-lived spade Shadow puts on YOUR message while he is thinking is separate and unchanged.
-
-NEW IN THIS UPDATE - wrong command run for ordinary requests
-  - Bug: asking "give me the lyrics for ..." answered "Usage: .aimodel(status)". Any request starting with
-    give/tell/find/show gave the AI a tool that can run ANY command; with no lyrics command it picked the
-    nearest-looking one and Shadow repeated that command's usage error.
-  - Fix 1: the command tool is only offered when the request actually relates to a command (its name,
-    a word inside its name such as "description" in setdescription, or a meaningful word from its description).
-  - Fix 2: even when offered, a command the request is not about is refused (pending confirmations exempt).
-  - Side effect: ordinary questions no longer take the slower tool-enabled model path, so they answer faster.
-  - Shadow has no lyrics lookup; such questions now go to the AI model like any other question.
-
-EARLIER (all included)
-  - Speed: history writes no longer block the model request or the reply.
-  - Memory: 14-day history, per-person keys that survive re-linking, group earlier-exchanges, better memory recall,
-    one-time lossless data merge with .bak backups (4 optional settings in .env.example).
-  - DMs: owner/sudo recognised under every identity form (phone number or LID); .delete/.clear work in DMs.
+NOT VERIFIED: live calls to LRCLIB (my sandbox has no internet). Everything above is tested with simulated responses.
+NOTE: only the owner and sudo users can run commands, so a normal group member typing .lyrics is ignored by design.
